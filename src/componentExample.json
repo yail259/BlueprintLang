@@ -1,0 +1,395 @@
+{
+  "nodes": [
+    {
+      "id": "cmp.editorUI",
+      "parentId": "ctr.frontend",
+      "type": "default",
+      "position": {
+        "x": 363.31412008902873,
+        "y": -421.13610625336764
+      },
+      "data": {
+        "label": "Editor UI",
+        "c4Type": "component",
+        "role": "controller"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.stateStore",
+      "parentId": "ctr.frontend",
+      "type": "default",
+      "position": {
+        "x": 550.2559181388332,
+        "y": 75.54124486570511
+      },
+      "data": {
+        "label": "State Store",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.docController",
+      "parentId": "ctr.api",
+      "type": "default",
+      "position": {
+        "x": 364.8466780238501,
+        "y": -203.06005110732534
+      },
+      "data": {
+        "label": "Doc Controller",
+        "c4Type": "component",
+        "role": "controller"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.tokenValidator",
+      "parentId": "ctr.api",
+      "type": "default",
+      "position": {
+        "x": 606.5739571854016,
+        "y": -17.370010084738976
+      },
+      "data": {
+        "label": "Token Validator",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.docService",
+      "parentId": "ctr.api",
+      "type": "default",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "data": {
+        "label": "Doc Service",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false
+    },
+    {
+      "id": "cmp.sessionMgr",
+      "parentId": "ctr.realtime",
+      "type": "default",
+      "position": {
+        "x": 1009.2341688929022,
+        "y": 238.27815697867285
+      },
+      "data": {
+        "label": "Session Manager",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.otEngine",
+      "parentId": "ctr.realtime",
+      "type": "default",
+      "position": {
+        "x": 963.8881568390935,
+        "y": 25.580906408507758
+      },
+      "data": {
+        "label": "OT Engine",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.presenceBroad",
+      "parentId": "ctr.realtime",
+      "type": "default",
+      "position": {
+        "x": 1023.6245348787832,
+        "y": 486.72552266436924
+      },
+      "data": {
+        "label": "Presence Broadcaster",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.jwtIssuer",
+      "parentId": "ctr.auth",
+      "type": "default",
+      "position": {
+        "x": 769.1118728069005,
+        "y": -192.83894229077526
+      },
+      "data": {
+        "label": "JWT Issuer",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.passwordHasher",
+      "parentId": "ctr.auth",
+      "type": "default",
+      "position": {
+        "x": 320,
+        "y": 320
+      },
+      "data": {
+        "label": "Password Hasher",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false
+    },
+    {
+      "id": "cmp.docRepo",
+      "parentId": "ctr.storage",
+      "type": "default",
+      "position": {
+        "x": 821.7203317536058,
+        "y": 210.92344779548003
+      },
+      "data": {
+        "label": "Document Repo",
+        "c4Type": "component",
+        "role": "repository"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "cmp.versionRepo",
+      "parentId": "ctr.storage",
+      "type": "default",
+      "position": {
+        "x": 847.357336636564,
+        "y": 484.8093171047313
+      },
+      "data": {
+        "label": "Version Repo",
+        "c4Type": "component",
+        "role": "repository"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_ui_save",
+      "source": "cmp.editorUI",
+      "target": "cmp.docController",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "contract",
+        "semanticRole": "command",
+        "schemaRef": "#/SaveDocRequest",
+        "responseSchemaRef": "#/SaveDocResponse",
+        "sync": true,
+        "delivery": "atMostOnce",
+        "idempotent": false,
+        "version": "v1"
+      },
+      "selected": false
+    },
+    {
+      "id": "e_ctrl_validate",
+      "source": "cmp.docController",
+      "target": "cmp.tokenValidator",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "contract",
+        "semanticRole": "query",
+        "schemaRef": "#/TokenPayload",
+        "responseSchemaRef": "#/TokenStatus",
+        "sync": true,
+        "delivery": "exactlyOnce",
+        "idempotent": true,
+        "version": "v1"
+      },
+      "selected": false
+    },
+    {
+      "id": "e_ctrl_to_service",
+      "source": "cmp.docController",
+      "target": "cmp.docService",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "contract",
+        "semanticRole": "command",
+        "schemaRef": "#/DocCommand",
+        "responseSchemaRef": "#/DocResult",
+        "sync": true,
+        "delivery": "atLeastOnce",
+        "idempotent": false,
+        "timeout": 500,
+        "version": "v2"
+      },
+      "selected": false
+    },
+    {
+      "id": "e_service_write_repo",
+      "source": "cmp.docService",
+      "target": "cmp.docRepo",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "contract",
+        "semanticRole": "command",
+        "schemaRef": "#/DocEntity",
+        "responseSchemaRef": null,
+        "sync": true,
+        "delivery": "exactlyOnce",
+        "idempotent": true,
+        "version": "v1"
+      },
+      "selected": false
+    },
+    {
+      "id": "e_service_write_version",
+      "source": "cmp.docService",
+      "target": "cmp.versionRepo",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "contract",
+        "semanticRole": "command",
+        "schemaRef": "#/DocVersion",
+        "responseSchemaRef": null,
+        "sync": true,
+        "delivery": "exactlyOnce",
+        "idempotent": true,
+        "version": "v1"
+      },
+      "selected": false
+    },
+    {
+      "id": "e_ot_query_session",
+      "source": "cmp.otEngine",
+      "target": "cmp.sessionMgr",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "contract",
+        "semanticRole": "query",
+        "schemaRef": "#/SessionStateReq",
+        "responseSchemaRef": "#/SessionStateRes",
+        "sync": true,
+        "delivery": "atMostOnce",
+        "idempotent": true,
+        "version": "v1"
+      },
+      "selected": false
+    },
+    {
+      "id": "e_presence_evt",
+      "source": "cmp.presenceBroad",
+      "target": "cmp.sessionMgr",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "contract",
+        "semanticRole": "event",
+        "schemaRef": "#/PresenceUpdate",
+        "sync": false,
+        "delivery": "atLeastOnce",
+        "idempotent": true,
+        "version": "v1"
+      },
+      "selected": false
+    },
+    {
+      "id": "e_state_stream",
+      "source": "cmp.stateStore",
+      "target": "cmp.otEngine",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "contract",
+        "semanticRole": "stream",
+        "schemaRef": "#/OTOperation",
+        "sync": false,
+        "delivery": "atLeastOnce",
+        "idempotent": true,
+        "version": "v1"
+      },
+      "selected": false
+    },
+    {
+      "id": "e_jwt_event",
+      "source": "cmp.jwtIssuer",
+      "target": "cmp.tokenValidator",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "contract",
+        "semanticRole": "event",
+        "schemaRef": "#/TokenIssued",
+        "sync": false,
+        "delivery": "atMostOnce",
+        "idempotent": true,
+        "version": "v1"
+      },
+      "selected": false
+    }
+  ]
+}

@@ -1,0 +1,475 @@
+{
+  "nodes": [
+    {
+      "id": "file.service",
+      "type": "default",
+      "position": {
+        "x": -176.75132582683648,
+        "y": -397.2990490890276
+      },
+      "width": 500,
+      "height": 500,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "service.js",
+        "c4Type": "code",
+        "role": "class",
+        "tags": [
+          "file"
+        ]
+      },
+      "measured": {
+        "width": 500,
+        "height": 500
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "func.initService",
+      "parentId": "file.service",
+      "extent": "parent",
+      "type": "default",
+      "position": {
+        "x": 333.915755948378,
+        "y": 81.0521079499294
+      },
+      "width": 150,
+      "height": 36,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "initService()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "func.processRequest",
+      "parentId": "file.service",
+      "extent": "parent",
+      "type": "default",
+      "position": {
+        "x": 30.865291492999518,
+        "y": 222.8668028011753
+      },
+      "width": 150,
+      "height": 36,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "processRequest()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "func.generateId",
+      "parentId": "file.service",
+      "extent": "parent",
+      "type": "default",
+      "position": {
+        "x": 339.39089898109034,
+        "y": 366.5173478588533
+      },
+      "width": 150,
+      "height": 36,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "generateId()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "file.repo",
+      "type": "default",
+      "position": {
+        "x": 761.2022918006911,
+        "y": -501.57900721134973
+      },
+      "width": 400,
+      "height": 400,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "repo.js",
+        "c4Type": "code",
+        "role": "class",
+        "tags": [
+          "file"
+        ]
+      },
+      "measured": {
+        "width": 400,
+        "height": 400
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "func.getConnection",
+      "parentId": "file.repo",
+      "extent": "parent",
+      "type": "default",
+      "position": {
+        "x": 242.62603017575555,
+        "y": 73.03327210974282
+      },
+      "width": 150,
+      "height": 36,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "getConnection()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "func.insertIntoDb",
+      "parentId": "file.repo",
+      "extent": "parent",
+      "type": "default",
+      "position": {
+        "x": 26.25735642605389,
+        "y": 209.57454549167727
+      },
+      "width": 150,
+      "height": 36,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "insertIntoDb()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "file.utils",
+      "type": "default",
+      "position": {
+        "x": 1288.756493287193,
+        "y": -26.82850682922833
+      },
+      "width": 200,
+      "height": 200,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "utils.js",
+        "c4Type": "code",
+        "role": "class",
+        "tags": [
+          "file"
+        ]
+      },
+      "measured": {
+        "width": 200,
+        "height": 200
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "func.formatTimestamp",
+      "parentId": "file.utils",
+      "extent": "parent",
+      "type": "default",
+      "position": {
+        "x": 20.007655071576664,
+        "y": 134.41289895340512
+      },
+      "width": 150,
+      "height": 36,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "formatTimestamp()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "func.log",
+      "parentId": "file.utils",
+      "extent": "parent",
+      "type": "default",
+      "position": {
+        "x": 23.138131489460193,
+        "y": 48.49001026909127
+      },
+      "width": 150,
+      "height": 36,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "log()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "file.serviceTest",
+      "type": "default",
+      "position": {
+        "x": -562.8318531077006,
+        "y": -381.604680269102
+      },
+      "width": 200,
+      "height": 200,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "service.test.js",
+        "c4Type": "code",
+        "role": "class",
+        "tags": [
+          "file",
+          "test"
+        ]
+      },
+      "measured": {
+        "width": 200,
+        "height": 200
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "func.shouldSaveDoc",
+      "parentId": "file.serviceTest",
+      "extent": "parent",
+      "type": "default",
+      "position": {
+        "x": 24.765594870931125,
+        "y": 51.43936430156339
+      },
+      "width": 150,
+      "height": 36,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "shouldSaveDoc()",
+        "c4Type": "code",
+        "role": "test"
+      },
+      "measured": {
+        "width": 150,
+        "height": 36
+      },
+      "selected": false
+    }
+  ],
+  "edges": [
+  {
+    "id": "e1",
+    "source": "func.processRequest",
+    "target": "func.initService",
+    "type": "c4FlowEdge",
+    "zIndex": 1,
+    "markerEnd": {
+      "type": "arrowclosed",
+      "width": "30",
+      "height": "30",
+      "strokeWidth": "5"
+    },
+    "data": {
+      "c4Type": "dataflow",
+      "operation": "call",
+      "datatype": "boolean",
+      "async": false,
+      "scope": "local",
+      "mutatesState": false,
+      "returns": "boolean"
+    }
+  },
+  {
+    "id": "e2",
+    "source": "func.processRequest",
+    "target": "func.generateId",
+    "type": "c4FlowEdge",
+    "zIndex": 1,
+    "markerEnd": {
+      "type": "arrowclosed",
+      "width": "30",
+      "height": "30",
+      "strokeWidth": "5"
+    },
+    "data": {
+      "c4Type": "dataflow",
+      "operation": "call",
+      "datatype": "string",
+      "async": false,
+      "scope": "local",
+      "mutatesState": false,
+      "returns": "string"
+    }
+  },
+  {
+    "id": "e3",
+    "source": "func.generateId",
+    "target": "func.formatTimestamp",
+    "type": "c4FlowEdge",
+    "zIndex": 1,
+    "markerEnd": {
+      "type": "arrowclosed",
+      "width": "30",
+      "height": "30",
+      "strokeWidth": "5"
+    },
+    "data": {
+      "c4Type": "dataflow",
+      "operation": "call",
+      "datatype": "string",
+      "async": false,
+      "scope": "module",
+      "mutatesState": false,
+      "returns": "string"
+    }
+  },
+  {
+    "id": "e4",
+    "source": "func.processRequest",
+    "target": "func.getConnection",
+    "type": "c4FlowEdge",
+    "zIndex": 1,
+    "markerEnd": {
+      "type": "arrow",
+      "width": "30",
+      "height": "30",
+      "strokeWidth": "1"
+    },
+    "data": {
+      "c4Type": "dataflow",
+      "operation": "call",
+      "datatype": "DBConnection",
+      "async": false,
+      "scope": "module",
+      "mutatesState": false,
+      "returns": "DBConnection"
+    }
+  },
+  {
+    "id": "e5",
+    "source": "func.insertIntoDb",
+    "target": "func.getConnection",
+    "type": "c4FlowEdge",
+    "zIndex": 1,
+    "markerEnd": {
+      "type": "arrow",
+      "width": "30",
+      "height": "30",
+      "strokeWidth": "1"
+    },
+    "data": {
+      "c4Type": "dataflow",
+      "operation": "read",
+      "datatype": "DBConnection",
+      "async": false,
+      "scope": "module",
+      "mutatesState": false
+    }
+  },
+  {
+    "id": "e6",
+    "source": "func.insertIntoDb",
+    "target": "func.log",
+    "type": "c4FlowEdge",
+    "zIndex": 1,
+    "markerEnd": {
+      "type": "arrowclosed",
+      "width": "30",
+      "height": "30",
+      "strokeWidth": "5"
+    },
+    "data": {
+      "c4Type": "dataflow",
+      "operation": "call",
+      "datatype": "string",
+      "async": false,
+      "scope": "module",
+      "mutatesState": false,
+      "returns": null
+    }
+  },
+  {
+    "id": "e_test_call",
+    "source": "func.shouldSaveDoc",
+    "target": "func.processRequest",
+    "type": "default",
+    "zIndex": 1,
+    "markerEnd": {
+      "type": "arrowclosed",
+      "width": "30",
+      "height": "30",
+      "strokeWidth": "5"
+    },
+    "data": {
+      "c4Type": "dataflow",
+      "operation": "call",
+      "datatype": "void",
+      "async": false,
+      "scope": "module",
+      "mutatesState": false,
+      "returns": null
+    }
+  }
+]
+}

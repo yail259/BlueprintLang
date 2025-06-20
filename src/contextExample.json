@@ -1,0 +1,101 @@
+{
+  "nodes": [
+    { "id": "actor.user",     "type": "default", "position": { "x":  50, "y":  50 }, "data": { "label": "User",          "c4Type": "actor"   } },
+    { "id": "system.portal",  "type": "default", "position": { "x": 250, "y":  50 }, "data": { "label": "Portal App",   "c4Type": "system"  } },
+    { "id": "system.smsGateway","type":"default","position": { "x": 450, "y":  50 }, "data": { "label": "SMS Gateway",  "c4Type": "system"  } },
+
+    { "id": "system.erp",     "type": "default", "position": { "x":  50, "y": 200 }, "data": { "label": "ERP",           "c4Type": "system"  } },
+    { "id": "system.s3Bucket","type":"default", "position": { "x": 250, "y": 200 }, "data": { "label": "S3 Bucket",     "c4Type": "system"  } },
+
+    { "id": "system.github",  "type": "default", "position": { "x": 450, "y": 200 }, "data": { "label": "GitHub",        "c4Type": "system"  } },
+    { "id": "system.cicd",    "type": "default", "position": { "x": 650, "y": 200 }, "data": { "label": "CI/CD Runner",  "c4Type": "system"  } },
+    { "id": "system.analytics","type":"default","position": { "x": 650, "y":  50 }, "data": { "label": "Analytics Svc", "c4Type": "system"  } }
+  ],
+
+  "edges": [
+  {
+    "id": "e_login_web",
+    "source": "actor.user",
+    "target": "system.portal",
+    "type": "c4FlowEdge",
+    "c4Type": "interaction",
+    "data": {
+      "intent": "login",
+      "direction": "->",
+      "sync": true,
+      "trustBoundary": true,
+      "dataClass": "confidential",
+      "channel": "web",
+      "freq": "interactive"
+    }
+  },
+
+  {
+    "id": "e_sms_otp",
+    "source": "system.portal",
+    "target": "system.smsGateway",
+    "type": "c4FlowEdge",
+    "c4Type": "interaction",
+    "data": {
+      "intent": "send OTP",
+      "direction": "->",
+      "sync": false,
+      "trustBoundary": true,
+      "dataClass": "secret",
+      "channel": "sms",
+      "freq": "interactive"
+    }
+  },
+
+  {
+    "id": "e_daily_export",
+    "source": "system.erp",
+    "target": "system.s3Bucket",
+    "type": "c4FlowEdge",
+    "c4Type": "interaction",
+    "data": {
+      "intent": "export ledger",
+      "direction": "->",
+      "sync": false,
+      "trustBoundary": false,
+      "dataClass": "internal",
+      "channel": "batch",
+      "freq": "periodic"
+    }
+  },
+
+  {
+    "id": "e_webhook",
+    "source": "system.github",
+    "target": "system.cicd",
+    "type": "c4FlowEdge",
+    "c4Type": "interaction",
+    "data": {
+      "intent": "webhook push",
+      "direction": "->",
+      "sync": false,
+      "trustBoundary": true,
+      "dataClass": "public",
+      "channel": "web",
+      "freq": "bulk"
+    }
+  },
+
+  {
+    "id": "e_api_poll",
+    "source": "system.analytics",
+    "target": "system.portal",
+    "type": "c4FlowEdge",
+    "c4Type": "interaction",
+    "data": {
+      "intent": "pull metrics",
+      "direction": "<-",
+      "sync": true,
+      "trustBoundary": false,
+      "dataClass": "internal",
+      "channel": "web",
+      "freq": "periodic"
+    }
+  }
+]
+}

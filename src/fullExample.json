@@ -1,0 +1,766 @@
+{
+  "nodes": [
+    {
+      "id": "actor.user",
+      "type": "c4FlowNode",
+      "position": {
+        "x": -713.9147133588956,
+        "y": 259.302550208232
+      },
+      "width": 142,
+      "height": 79,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "User",
+        "c4Type": "context",
+        "role": "actor"
+      },
+      "measured": {
+        "width": 142,
+        "height": 79
+      },
+      "selected": false,
+      "dragging": false,
+      "hidden": false
+    },
+    {
+      "id": "system.collab",
+      "type": "c4FlowNode",
+      "position": {
+        "x": -312.46286421379557,
+        "y": -71.07120987904545
+      },
+      "width": 2444,
+      "height": 741,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Collab-Docs (FIX ME!!!)",
+        "c4Type": "context",
+        "role": "internalSystem"
+      },
+      "measured": {
+        "width": 2444,
+        "height": 741
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "system.authProvider",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 2391.9436211121497,
+        "y": 267.33654723985353
+      },
+      "width": 140,
+      "height": 65,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Auth0",
+        "c4Type": "context",
+        "role": "externalSystem"
+      },
+      "measured": {
+        "width": 140,
+        "height": 65
+      },
+      "selected": false,
+      "dragging": false,
+      "hidden": false
+    },
+    {
+      "id": "ctr.frontend",
+      "parentId": "system.collab",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 45.89730054209355,
+        "y": 148.68583232476527
+      },
+      "width": 214,
+      "height": 262,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Web Frontend",
+        "c4Type": "container",
+        "role": "frontend"
+      },
+      "measured": {
+        "width": 214,
+        "height": 262
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "ctr.api",
+      "parentId": "system.collab",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 496.91634578696386,
+        "y": 63.28729950818246
+      },
+      "width": 1490,
+      "height": 641,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "API Gateway",
+        "c4Type": "container",
+        "role": "api"
+      },
+      "measured": {
+        "width": 1490,
+        "height": 641
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "ctr.realtime",
+      "parentId": "system.collab",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 2202.055193684369,
+        "y": 89.40489752755059
+      },
+      "width": 200,
+      "height": 240,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Realtime Hub",
+        "c4Type": "container",
+        "role": "eventSink"
+      },
+      "measured": {
+        "width": 200,
+        "height": 240
+      },
+      "selected": false,
+      "dragging": false,
+      "hidden": false
+    },
+    {
+      "id": "ctr.auth",
+      "parentId": "system.collab",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 54.136358671030735,
+        "y": 480.0353765590452
+      },
+      "width": 200,
+      "height": 150,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Auth Service",
+        "c4Type": "container",
+        "role": "auth"
+      },
+      "measured": {
+        "width": 200,
+        "height": 150
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "ctr.storage",
+      "parentId": "system.collab",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 2183.5772990991136,
+        "y": 529.5503374286288
+      },
+      "width": 200,
+      "height": 150,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Doc Storage",
+        "c4Type": "container",
+        "role": "infra"
+      },
+      "measured": {
+        "width": 200,
+        "height": 150
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.editorUI",
+      "parentId": "ctr.frontend",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 39.620347107947424,
+        "y": 75.32900061625088
+      },
+      "width": 135,
+      "height": 72,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Editor UI",
+        "c4Type": "component",
+        "role": "controller"
+      },
+      "measured": {
+        "width": 135,
+        "height": 72
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.stateStore",
+      "parentId": "ctr.frontend",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 37.218740252977,
+        "y": 172.97766046981442
+      },
+      "width": 140,
+      "height": 64,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "State Store",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 140,
+        "height": 64
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.docController",
+      "parentId": "ctr.api",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 11.678560289116604,
+        "y": 340.0557352541702
+      },
+      "width": 161,
+      "height": 62,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Doc Controller",
+        "c4Type": "component",
+        "role": "controller"
+      },
+      "measured": {
+        "width": 161,
+        "height": 62
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.tokenValidator",
+      "parentId": "ctr.api",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 161.20822889398536,
+        "y": 89.05180954448625
+      },
+      "width": 189,
+      "height": 67,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Token Validator",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 189,
+        "height": 67
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.docService",
+      "parentId": "ctr.api",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 388.04632099483507,
+        "y": 151.80608727222582
+      },
+      "width": 1033,
+      "height": 444,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Doc Service",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 1033,
+        "height": 444
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.sessionMgr",
+      "parentId": "ctr.realtime",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 26.65044429512568,
+        "y": 71.27933621372182
+      },
+      "width": 147,
+      "height": 66,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Session Mgr",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 147,
+        "height": 66
+      },
+      "selected": false,
+      "dragging": false,
+      "hidden": false
+    },
+    {
+      "id": "cmp.otEngine",
+      "parentId": "ctr.realtime",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 32.48215956632521,
+        "y": 154.74557887967327
+      },
+      "width": 137,
+      "height": 72,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "OT Engine",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 137,
+        "height": 72
+      },
+      "selected": false,
+      "dragging": false,
+      "hidden": false
+    },
+    {
+      "id": "cmp.jwtIssuer",
+      "parentId": "ctr.auth",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 22.91964007227915,
+        "y": 79.8526214817224
+      },
+      "width": 151,
+      "height": 59,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "JWT Issuer",
+        "c4Type": "component",
+        "role": "service"
+      },
+      "measured": {
+        "width": 151,
+        "height": 59
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "cmp.docRepo",
+      "parentId": "ctr.storage",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 24.379460108418698,
+        "y": 57.25423719411356
+      },
+      "width": 142,
+      "height": 66,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Doc Repo",
+        "c4Type": "component",
+        "role": "repository"
+      },
+      "measured": {
+        "width": 142,
+        "height": 66
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "file.docService",
+      "parentId": "cmp.docService",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 18.977084942961824,
+        "y": 71.40248664462447
+      },
+      "width": 941,
+      "height": 332,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "docService.js",
+        "c4Type": "code",
+        "role": "class",
+        "tags": [
+          "file"
+        ]
+      },
+      "measured": {
+        "width": 941,
+        "height": 332
+      },
+      "selected": false,
+      "dragging": false,
+      "hidden": false
+    },
+    {
+      "id": "func.validate",
+      "parentId": "file.docService",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 31.22088911461549,
+        "y": 153.96477262312453
+      },
+      "width": 151,
+      "height": 71,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "validate()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 151,
+        "height": 71
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "func.save",
+      "parentId": "file.docService",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 392.51723022571014,
+        "y": 151.28312683005856
+      },
+      "width": 150,
+      "height": 67,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "save()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 150,
+        "height": 67
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    },
+    {
+      "id": "func.emitEvent",
+      "parentId": "file.docService",
+      "extent": "parent",
+      "type": "c4FlowNode",
+      "position": {
+        "x": 764.8661405340398,
+        "y": 148.7124787129821
+      },
+      "width": 140,
+      "height": 72,
+      "zIndex": 0,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "emitEvent()",
+        "c4Type": "code",
+        "role": "function"
+      },
+      "measured": {
+        "width": 140,
+        "height": 72
+      },
+      "selected": false,
+      "hidden": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "ctx_login",
+      "source": "actor.user",
+      "target": "system.collab",
+      "type": "c4FlowEdge",
+      "zIndex": 1,
+      "markerEnd": {
+        "type": "arrow",
+        "width": "30",
+        "height": "30",
+        "strokeWidth": "1"
+      },
+      "data": {
+        "c4FlowType": "interaction",
+        "intent": "use app",
+        "direction": "->",
+        "sync": true,
+        "trustBoundary": true,
+        "dataClass": "confidential",
+        "channel": "web",
+        "freq": "interactive"
+      },
+      "hidden": false,
+      "selected": false
+    },
+    {
+      "id": "ctx_oauth",
+      "source": "system.collab",
+      "target": "system.authProvider",
+      "type": "c4FlowEdge",
+      "zIndex": 1,
+      "markerEnd": {
+        "type": "arrow",
+        "width": "30",
+        "height": "30",
+        "strokeWidth": "1"
+      },
+      "data": {
+        "c4FlowType": "interaction",
+        "intent": "OAuth redirect",
+        "direction": "->",
+        "sync": true,
+        "trustBoundary": true,
+        "dataClass": "public",
+        "channel": "web",
+        "freq": "interactive"
+      },
+      "hidden": false,
+      "selected": false
+    },
+    {
+      "id": "cont_front_to_api",
+      "source": "ctr.frontend",
+      "target": "ctr.api",
+      "type": "c4FlowEdge",
+      "zIndex": 1,
+      "markerEnd": {
+        "type": "arrow",
+        "width": "30",
+        "height": "30",
+        "strokeWidth": "1"
+      },
+      "data": {
+        "c4FlowType": "protocol",
+        "tech": "REST",
+        "endpoint": "POST /docs",
+        "method": "POST",
+        "direction": "->",
+        "throughput": 5,
+        "qosTier": "bronze",
+        "timeout": 3000,
+        "authRequired": true
+      },
+      "hidden": false,
+      "selected": false
+    },
+    {
+      "id": "cont_api_to_realtime",
+      "source": "ctr.api",
+      "target": "ctr.realtime",
+      "type": "c4FlowEdge",
+      "zIndex": 1,
+      "markerEnd": {
+        "type": "arrow",
+        "width": "30",
+        "height": "30",
+        "strokeWidth": "1"
+      },
+      "data": {
+        "c4FlowType": "protocol",
+        "tech": "WebSocket",
+        "endpoint": "wss://rt/join",
+        "direction": "->",
+        "throughput": "high",
+        "qosTier": "gold",
+        "authRequired": true
+      },
+      "hidden": false,
+      "selected": false
+    },
+    {
+      "id": "comp_ctrl_to_service",
+      "source": "cmp.docController",
+      "target": "cmp.docService",
+      "type": "c4FlowEdge",
+      "zIndex": 1,
+      "markerEnd": {
+        "type": "arrow",
+        "width": "30",
+        "height": "30",
+        "strokeWidth": "1"
+      },
+      "data": {
+        "c4FlowType": "contract",
+        "semanticRole": "command",
+        "schemaRef": "#/SaveDoc",
+        "sync": true,
+        "delivery": "atLeastOnce",
+        "idempotent": false,
+        "version": "v1"
+      },
+      "hidden": false,
+      "selected": false
+    },
+    {
+      "id": "comp_service_to_repo",
+      "source": "cmp.docService",
+      "target": "cmp.docRepo",
+      "type": "c4FlowEdge",
+      "zIndex": 1,
+      "markerEnd": {
+        "type": "arrow",
+        "width": "30",
+        "height": "30",
+        "strokeWidth": "1"
+      },
+      "data": {
+        "c4FlowType": "contract",
+        "semanticRole": "command",
+        "schemaRef": "#/DocEntity",
+        "sync": true,
+        "delivery": "exactlyOnce",
+        "idempotent": true,
+        "version": "v1"
+      },
+      "hidden": false,
+      "selected": false
+    },
+    {
+      "id": "code_validate_to_save",
+      "source": "func.validate",
+      "target": "func.save",
+      "type": "c4FlowEdge",
+      "zIndex": 1,
+      "markerEnd": {
+        "type": "arrow",
+        "width": "30",
+        "height": "30",
+        "strokeWidth": "1"
+      },
+      "data": {
+        "c4FlowType": "dataflow",
+        "operation": "call",
+        "datatype": "ValidatedDoc",
+        "async": false,
+        "scope": "local",
+        "mutatesState": false,
+        "returns": "boolean"
+      },
+      "hidden": false,
+      "selected": false
+    },
+    {
+      "id": "code_save_to_emit",
+      "source": "func.save",
+      "target": "func.emitEvent",
+      "type": "c4FlowEdge",
+      "zIndex": 1,
+      "markerEnd": {
+        "type": "arrow",
+        "width": "30",
+        "height": "30",
+        "strokeWidth": "1"
+      },
+      "data": {
+        "c4FlowType": "dataflow",
+        "operation": "call",
+        "datatype": "EventPayload",
+        "async": false,
+        "scope": "local",
+        "mutatesState": false,
+        "returns": null
+      },
+      "hidden": false,
+      "selected": false
+    }
+  ]
+}

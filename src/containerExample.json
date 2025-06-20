@@ -1,0 +1,124 @@
+{
+  "nodes": [
+    { "id": "ctr.frontend", "type": "default", "position": { "x": 50, "y": 50 }, "data": { "label": "Web Front-End", "c4Type": "container" } },
+    { "id": "ctr.api", "type": "default", "position": { "x": 300, "y": 50 }, "data": { "label": "API Gateway", "c4Type": "container" } },
+    { "id": "ctr.realtime", "type": "default", "position": { "x": 550, "y": 50 }, "data": { "label": "Real-Time Hub", "c4Type": "container" } },
+    { "id": "ctr.auth", "type": "default", "position": { "x": 300, "y": 200 }, "data": { "label": "Auth Service", "c4Type": "container" } },
+    { "id": "ctr.storage", "type": "default", "position": { "x": 550, "y": 200 }, "data": { "label": "Doc Storage", "c4Type": "container" } },
+    { "id": "ctr.redis", "type": "default", "position": { "x": 800, "y": 50 }, "data": { "label": "Redis Cache", "c4Type": "container" } }
+  ],
+
+  "edges": [
+    {
+      "id": "e_login",
+      "source": "ctr.frontend",
+      "target": "ctr.auth",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "protocol",
+        "tech": "REST",
+        "endpoint": "POST /login",
+        "method": "POST",
+        "direction": "->",
+        "throughput": 5,
+        "qosTier": "bronze",
+        "timeout": 3000,
+        "retries": 0,
+        "authRequired": false,
+        "encryption": "TLS"
+      }
+    },
+    {
+      "id": "e_auth2api",
+      "source": "ctr.auth",
+      "target": "ctr.api",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "protocol",
+        "tech": "gRPC",
+        "endpoint": "ValidateToken()",
+        "direction": "->",
+        "throughput": 100,
+        "qosTier": "silver",
+        "timeout": 150,
+        "retries": 2,
+        "authRequired": true,
+        "encryption": "mTLS"
+      }
+    },
+    {
+      "id": "e_api2realtime_rest",
+      "source": "ctr.api",
+      "target": "ctr.realtime",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "protocol",
+        "tech": "REST",
+        "endpoint": "POST /room",
+        "direction": "->",
+        "sync": true,
+        "throughput": "low",
+        "qosTier": "silver",
+        "timeout": 800,
+        "authRequired": true,
+        "encryption": "TLS"
+      }
+    },
+    {
+      "id": "e_api2realtime_ws",
+      "source": "ctr.api",
+      "target": "ctr.realtime",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "protocol",
+        "tech": "WebSocket",
+        "endpoint": "wss://realtime/join",
+        "direction": "->",
+        "sync": false,
+        "throughput": "high",
+        "qosTier": "gold",
+        "timeout": 0,
+        "retries": 0,
+        "authRequired": true,
+        "encryption": "TLS"
+      }
+    },
+    {
+      "id": "e_realtime2redis",
+      "source": "ctr.realtime",
+      "target": "ctr.redis",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "protocol",
+        "tech": "Redis",
+        "endpoint": "PUBLISH doc:1234",
+        "direction": "->",
+        "sync": false,
+        "throughput": "high",
+        "qosTier": "gold",
+        "timeout": 20,
+        "authRequired": false,
+        "encryption": "None"
+      }
+    },
+    {
+      "id": "e_api2storage",
+      "source": "ctr.api",
+      "target": "ctr.storage",
+      "type": "c4FlowEdge",
+      "data": {
+        "c4Type": "protocol",
+        "tech": "gRPC",
+        "endpoint": "SaveDocument()",
+        "direction": "->",
+        "throughput": 10,
+        "qosTier": "silver",
+        "accessType": "write",
+        "timeout": 800,
+        "retries": 3,
+        "authRequired": true,
+        "encryption": "mTLS"
+      }
+    }
+  ]
+}
