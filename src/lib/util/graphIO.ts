@@ -12,25 +12,12 @@
 
 import { parse, stringify } from "yaml";
 import { type NodeSem, type EdgeSem } from "./graphType.ts";
-import { type Node, type Edge } from "@xyflow/svelte";
-
-/* ---------- visual shapes ---------- */
-export interface NodeView {
-  id: string;
-  position: { x: number; y: number };
-  width: number;
-  height: number;
-  zIndex?: number;
-}
-
-export interface EdgeView {
-  id: string;
-  source: string;
-  target: string;
-  zIndex?: number;
-  markerEnd?: Record<string, unknown>;
-  points?: [number, number][];
-}
+import {
+  type Node,
+  type Edge,
+  type EdgeMarkerType,
+  MarkerType,
+} from "@xyflow/svelte";
 
 /* ---------- semantic container as in YAML ---------- */
 export interface GraphSemYAML {
@@ -43,6 +30,9 @@ export interface GraphSemYAML {
     }
   >;
 }
+
+export type NodeView = Omit<Node, "data">;
+export type EdgeView = Omit<Edge, "data">;
 
 export interface GraphViewJSON {
   nodes: NodeView[];
@@ -58,65 +48,50 @@ const DEFAULT_SEMANTIC = "graph.bpl.yaml";
 const DEFAULT_VIEW = "graph.sfv.json";
 /* ───────────────────── Loader ───────────────────────── */
 
-export async function loadGraph(
-  yamlFile: File,
-  jsonFile: File | null
-): Promise<MergedGraph> {
-  const sem = parse(await yamlFile.text());
+export function loadGraph(yamlText: string, viewText: string): MergedGraph {
+  const sem = parse(yamlText) as GraphSemYAML;
+  const view = (viewText ? JSON.parse(viewText) : {}) as Partial<GraphViewJSON>;
 
-  const view = jsonFile
-    ? JSON.parse(await jsonFile.text())
-    : { nodes: [], edges: [] };
-
-  const defaultPos = { x: 40, y: 40 };
-
-  const Nodes: Node[] = Object.entries(sem.nodes).map(([id, semNode]) => {
-    const v = view.nodes.find((n: { id: string }) => n.id === id);
+  const nodes: Node[] = Object.entries(sem.nodes ?? {}).map(([id, semNode]) => {
+    const v = view.nodes?.find((n) => n.id === id);
     return {
       id,
-      data: semNode,
-      position: v?.position ?? defaultPos,
+      type: "c4FlowNode",
+      data: { ...(semNode as NodeSem) },
+      position: v?.position ?? { x: 40, y: 40 },
       width: v?.width ?? 150,
       height: v?.height ?? 40,
       zIndex: v?.zIndex ?? 0,
-    } as Node;
+    };
   });
 
-  const Edges: Edge[] = Object.entries(sem.edges).map(([id, semEdge]) => {
-    const v = view.edges.find((e: { id: string }) => e.id === id);
-
+  const edges: Edge[] = Object.entries(sem.edges ?? {}).map(([id, semEdge]) => {
+    const v = view.edges?.find((e) => e.id === id);
     const { source, target } = semEdge as EdgeSem;
-
     return {
       id,
       type: "c4FlowEdge",
-      source: source,
-      target: target,
-      data: semEdge as EdgeSem,
+      source,
+      target,
+      data: { ...(semEdge as EdgeSem) },
       zIndex: v?.zIndex ?? 1,
       markerEnd: v?.markerEnd ?? { type: "arrow" },
-    } satisfies Edge;
+    };
   });
 
-  return { nodes: Nodes, edges: Edges };
+  return { nodes, edges };
 }
 
-function toMarkerObj(
-  m?: string | Record<string, unknown>
-): Record<string, unknown> | undefined {
-  if (!m) return undefined;
-  return typeof m === "string" ? { type: m } : m;
-}
-
-export function saveGraphView(merged: MergedGraph): void {
+export function saveGraphView(merged: MergedGraph): string {
   /* ---------- view JSON ---------- */
   const viewOut: GraphViewJSON = {
     nodes: merged.nodes.map(
-      ({ id, position, width, height, zIndex }): NodeView => ({
+      ({ id, type, position, width, height, zIndex }): NodeView => ({
         id,
         position,
-        width: width ?? 150, // 👈 default
-        height: height ?? 40, // 👈 default
+        type: type ?? "c4FlowNode",
+        width: width ?? 150,
+        height: height ?? 40,
         zIndex: zIndex ?? 0,
       })
     ),
@@ -127,19 +102,23 @@ export function saveGraphView(merged: MergedGraph): void {
         source,
         target,
         zIndex: zIndex ?? 1,
-        markerEnd: toMarkerObj(markerEnd) ?? { type: "arrow" },
+        markerEnd: markerEnd,
       })
     ),
   };
 
-  const viewBlob = new Blob([JSON.stringify(viewOut, null, 2)], {
-    type: "application/json",
-  });
+  const viewStr = JSON.stringify(viewOut, null, 2);
 
-  triggerDownload(viewBlob, DEFAULT_VIEW);
+  return viewStr;
+
+  // const viewBlob = new Blob([], {
+  //   type: "application/json",
+  // });
+
+  // triggerDownload(viewBlob, DEFAULT_VIEW);
 }
 
-export function saveGraphSemantic(merged: MergedGraph): void {
+export function saveGraphSemantic(merged: MergedGraph): string {
   const outNodes: GraphSemYAML["nodes"] = {};
   const outEdges: GraphSemYAML["edges"] = {};
 
@@ -155,15 +134,21 @@ export function saveGraphSemantic(merged: MergedGraph): void {
     const { id, source, target, data: semEdge } = e;
     // YAML wants source/target plus semantic props
     outEdges[id] = {
+      source,
+      target,
       ...(semEdge as EdgeSem),
     };
   });
 
-  const yamlBlob = new Blob([stringify({ nodes: outNodes, edges: outEdges })], {
-    type: "text/yaml",
-  });
+  const yamlStr = stringify({ nodes: outNodes, edges: outEdges });
 
-  triggerDownload(yamlBlob, DEFAULT_SEMANTIC);
+  return yamlStr;
+
+  // const yamlBlob = new Blob([], {
+  //   type: "text/yaml",
+  // });
+
+  // triggerDownload(yamlBlob, DEFAULT_SEMANTIC);
 }
 
 function triggerDownload(blob: Blob, filename: string) {

@@ -1,3 +1,26 @@
+export const exampleYaml = `
+nodes:
+  actor.user:
+    label: User
+    c4Type: context
+    role: actor
+  system.collab:
+    label: Collab-Docs
+    c4Type: context
+    role: internalSystem
+edges:
+  ctx_login:
+    source: actor.user
+    target: system.collab
+    c4FlowType: interaction
+    kind: login
+    direction: '->'
+    sync: true
+    channel: web
+
+`;
+
+export const exampleJSON = `
 {
   "nodes": [
     {
@@ -35,3 +58,4 @@
     }
   ]
 }
+`;

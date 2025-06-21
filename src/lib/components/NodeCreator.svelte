@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
   import { useDnD } from "./DnDProvider.svelte";
 
   const type = useDnD();
@@ -65,4 +65,4 @@
     border-radius: 5px;
     cursor: grab;
   }
-</style>
+</style> -->

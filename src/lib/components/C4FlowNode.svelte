@@ -10,10 +10,12 @@
   } from "@xyflow/svelte";
   import { nanoid } from "nanoid";
 
-  let { id, width, height, data, selected }: NodeProps = $props();
+  let { id, width, height, data = $bindable(), selected }: NodeProps = $props();
 
   const { updateNodeData } = useSvelteFlow();
   const nodes = useNodes();
+
+  let label = $state(data.label);
 
   function addSubNode(e: MouseEvent) {
     e.stopPropagation();
@@ -90,8 +92,11 @@
       outline: none;
       background: transparent;
     "
-    bind:value={data.label}
-    onchange={() => updateNodeData(id, { label: data.label })}
+    bind:value={label}
+    onchange={() => {
+      // console.log(label);
+      updateNodeData(id, { label: label });
+    }}
   />
 
   <!-- custom details (inline, no separate components) -->
