@@ -56,8 +56,8 @@
 <Tabs.Root value="graphVal" class="flex flex-col h-screen w-[400px]">
   <!-- Tab bar -->
   <Tabs.List class="flex-none border-b border-slate-200">
-    <Tabs.Trigger value="graphVal">Graph YAML</Tabs.Trigger>
-    <Tabs.Trigger value="viewVal">View JSON</Tabs.Trigger>
+    <Tabs.Trigger value="graphVal">Graph</Tabs.Trigger>
+    <Tabs.Trigger value="viewVal">View</Tabs.Trigger>
   </Tabs.List>
 
   <!-- YAML editor pane -->

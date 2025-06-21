@@ -8,7 +8,12 @@
     type NodeProps,
     type Node,
   } from "@xyflow/svelte";
+  import { Baby } from "lucide-svelte";
   import { nanoid } from "nanoid";
+
+  import * as Dialog from "$lib/components/ui/dialog/index.js";
+  import { Input } from "$lib/components/ui/input/index.js";
+  import { Button } from "$lib/components/ui/button/index.js";
 
   let { id, width, height, data = $bindable(), selected }: NodeProps = $props();
 
@@ -17,10 +22,18 @@
 
   let label = $state(data.label);
 
-  function addSubNode(e: MouseEvent) {
-    e.stopPropagation();
+  // function wait(ms: number) {
+  //   return new Promise((resolve) => setTimeout(resolve, ms));
+  // }
 
-    console.log("here");
+  let open = $state(false);
+
+  function addSubNode(e: SubmitEvent) {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+
+    const nameViaFD = new FormData(form).get("name") as string;
+
     const nextLayer =
       data.c4Type === "context"
         ? "container"
@@ -34,15 +47,15 @@
     const position = localPos;
 
     const newNode: Node = {
-      id: nanoid(),
+      id: nameViaFD,
       type: "c4FlowNode",
       parentId: id,
       extent: "parent",
       position,
-      width: 140,
-      height: 40,
+      width: (width ?? 140) * 0.5,
+      height: (height ?? 80) * 0.5,
       data: {
-        label: "New node",
+        label: nameViaFD,
         c4Type: nextLayer,
         role: "function",
       },
@@ -63,7 +76,6 @@
 
 <Handle type="target" position={Position.Left} />
 
-<!-- Node body -->
 <div
   style={`
     width: ${width}px;
@@ -105,7 +117,7 @@
       <small class="nodrag" style="opacity:0.7;">
         {data.role}
         {#if data.tags?.length}
-          — {data.tags.join(", ")}
+          — {data.tags?.join(", ")}
         {/if}
       </small>
     {:else}
@@ -115,27 +127,49 @@
 
   <!-- plus button rendered only when selected -->
   {#if selected}
-    <button
-      class="nodrag"
-      style="
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: #0d9488;
-        color: white;
-        border: none;
-        cursor: pointer;
-        font-weight: 700;
+    <Dialog.Root bind:open>
+      <Dialog.Trigger
+        ><button
+          class="
+        nodrag absolute -top-2 -right-2 /* ⭢ -10 px */
+        w-8 h-8 rounded-full /* 24 px circle */
+        bg-primary hover:bg-ring /* “primary” tint + hover */
+        text-white flex items-center justify-center
+        cursor-pointer
       "
-      onclick={(e) => addSubNode(e)}
-      title="Add child node"
-    >
-      +
-    </button>
+          title="Add child node"
+        >
+          <Baby class="w-4 h-4" />
+        </button>
+      </Dialog.Trigger>
+
+      <Dialog.Content>
+        <Dialog.Header>
+          <!-- compact, centered panel -->
+          <form
+            class="flex flex-col gap-6 w-full max-w-md mx-auto"
+            onsubmit={(e) => {
+              addSubNode(e);
+              open = false;
+            }}
+          >
+            <Dialog.Title class="text-xl font-semibold"
+              >Name your new child node!</Dialog.Title
+            >
+
+            <!-- field row: label + input in a simple grid -->
+            <div class="grid grid-cols-4 items-center gap-3">
+              <!-- Input keeps its own styling, just fills remaining space -->
+              <Input id="name" name="name" class="col-span-3" />
+              <Button type="submit">Create</Button>
+            </div>
+          </form>
+        </Dialog.Header>
+      </Dialog.Content>
+    </Dialog.Root>
   {/if}
 </div>
+
+<!-- Node body -->
 
 <Handle type="source" position={Position.Right} />
