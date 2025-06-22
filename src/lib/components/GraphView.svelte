@@ -5,8 +5,6 @@
     MiniMap,
     Controls,
     Panel,
-    type Node,
-    type Edge,
     type NodeTypes,
   } from "@xyflow/svelte";
 
@@ -15,6 +13,7 @@
   import C4FlowEdge from "$lib/components/C4FlowEdge.svelte";
 
   import { graph } from "$lib/state/graph.svelte";
+  import NodeCreator from "./NodeCreator.svelte";
 
   $inspect(graph);
 
@@ -39,8 +38,8 @@
       <LayerSelector />
     </Panel>
 
-    <Panel position="top-center">
-      <!-- <NodeCreator /> -->
+    <Panel position="top-left">
+      <NodeCreator />
     </Panel>
 
     <Controls />
@@ -59,7 +58,6 @@
       pannable
     />
   </SvelteFlow>
-  <!-- {/if} -->
 </main>
 
 <style>

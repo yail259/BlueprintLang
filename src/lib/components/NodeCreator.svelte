@@ -1,68 +1,160 @@
-<!-- <script lang="ts">
-  import { useDnD } from "./DnDProvider.svelte";
+<script lang="ts">
+  import { useNodes, useSvelteFlow, type Node } from "@xyflow/svelte";
 
-  const type = useDnD();
+  import * as Dialog from "$lib/components/ui/dialog/index.js";
 
-  const onDragStart = (event: DragEvent, nodeType: string) => {
-    if (!event.dataTransfer) {
-      return null;
+  import { Input } from "$lib/components/ui/input/index.js";
+  import { Label } from "$lib/components/ui/label/index.js";
+  import { Button } from "$lib/components/ui/button/index.js";
+
+  import { Plus } from "lucide-svelte";
+
+  const nodes = useNodes();
+
+  let open = $state(false);
+
+  let currC4NodeType = $state("component");
+  let currName = $state("");
+
+  let exists = $derived(nodes.current.some((node) => node.id === currName));
+
+  const opts = ["context", "container", "component", "code"];
+
+  function pick(t: string) {
+    currC4NodeType = t;
+  }
+
+  const { getViewport } = useSvelteFlow();
+
+  function addNode(e: SubmitEvent) {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+
+    const nameViaFD = new FormData(form).get("name") as string;
+    const roleViaFD = new FormData(form).get("role") as string;
+
+    const pane = document
+      ?.querySelector(".svelte-flow__pane")
+      ?.getBoundingClientRect();
+
+    if (!pane) {
+      alert("no pane");
+      return;
     }
 
-    type.current = nodeType;
+    const { width, height } = pane;
 
-    event.dataTransfer.effectAllowed = "move";
-  };
+    const { x, y, zoom } = getViewport();
+
+    const centreX = (-x + width / 2) / zoom;
+    const centreY = (-y + height / 2) / zoom;
+
+    const newNode: Node = {
+      id: nameViaFD,
+      type: "c4FlowNode",
+      position: {
+        x: centreX,
+        y: centreY,
+      },
+      width: 140,
+      height: 80,
+      data: {
+        label: nameViaFD,
+        c4Type: currC4NodeType,
+        role: roleViaFD,
+      },
+    };
+
+    nodes.update((curr) => {
+      return [...curr, newNode];
+    });
+  }
 </script>
 
-<aside>
-  <div class="nodes-container"></div>
-</aside>
+<Dialog.Root bind:open>
+  <Dialog.Trigger>
+    <Button variant="outline" size="sm">
+      <Plus class="w-4 h-4" />
+      Create new node
+    </Button>
+  </Dialog.Trigger>
 
-<div
-  class="input-node node"
-  on:dragstart={(event) => onDragStart(event, "input")}
-  draggable={true}
->
-  Input Node
-</div>
-<div
-  class="default-node node"
-  on:dragstart={(event) => onDragStart(event, "default")}
-  draggable={true}
->
-  Default Node
-</div>
-<div
-  class="output-node node"
-  on:dragstart={(event) => onDragStart(event, "output")}
-  draggable={true}
->
-  Output Node
-</div>
+  <Dialog.Content>
+    <Dialog.Header>
+      <!-- compact, centered panel -->
+      <form
+        class="flex flex-col gap-6 w-full max-w-md mx-auto"
+        onsubmit={(e) => {
+          addNode(e);
+          open = false;
+        }}
+      >
+        <Dialog.Title class="text-xl font-semibold">
+          Create a new node
+        </Dialog.Title>
 
-<style>
-  aside {
-    width: 100%;
-    background: #fff;
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+        <div class="grid grid-cols-4 items-center gap-3">
+          <Label for="name">Label</Label>
 
-  .nodes-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+          <Input
+            id="name"
+            name="name"
+            class="col-span-3"
+            bind:value={currName}
+          />
 
-  .node {
-    margin: 0.5rem;
-    border: 1px solid #111;
-    padding: 0.5rem 1rem;
-    font-weight: 700;
-    border-radius: 5px;
-    cursor: grab;
-  }
-</style> -->
+          {#if exists}
+            <!-- full–row message, small red text, a touch of negative-margin to tuck it closer -->
+            <p class="col-span-4 -mt-2 text-xs text-red-600">
+              A node with this ID already exists.
+            </p>
+          {/if}
+        </div>
+
+        <!-- ── Type (context / container / component / code) ─────────────── -->
+        <div class="grid grid-cols-4 items-center gap-3">
+          <Label for="c4Type">Type</Label>
+
+          <div
+            class="col-span-3 grid grid-cols-4 gap-px rounded-lg overflow-hidden border border-border"
+          >
+            {#each opts as t}
+              <Button
+                onclick={() => pick(t)}
+                class={`w-full text-sm rounded-none
+              ${
+                t === currC4NodeType
+                  ? "bg-primary text-primary-foreground ring-2 ring-ring"
+                  : "bg-muted text-muted-foreground hover:bg-muted/70"
+              }`}
+                style="padding-block:0.5rem"
+                type="button"
+              >
+                {t}
+              </Button>
+            {/each}
+          </div>
+        </div>
+
+        <!-- ── Role (optional free-text) ──────────────────────────────────── -->
+        <div class="grid grid-cols-4 items-center gap-3">
+          <Label for="role">Role</Label>
+          <Input
+            id="role"
+            name="role"
+            placeholder="controller / service / repo…"
+            class="col-span-3"
+          />
+        </div>
+
+        <!-- ── Action row ────────────────────────────────────────────────── -->
+        <div class="flex justify-end gap-4 pt-2">
+          <Button type="submit" disabled={exists}>Create</Button>
+          <Button type="button" variant="ghost" onclick={() => (open = false)}>
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </Dialog.Header>
+  </Dialog.Content>
+</Dialog.Root>
