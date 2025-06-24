@@ -28,13 +28,13 @@
 <BaseEdge {id} path={edgePath} {markerEnd} />
 <EdgeLabel x={labelX} y={labelY}>
   {#if data}
-    {#if data.c4FlowType === "interaction"}
-      <ContextEdgeLabel {data} />
-    {:else if data.c4FlowType === "protocol"}
+    {#if data.type === "interaction"}
+      <ContextEdgeLabel {id} {data} />
+    {:else if data.type === "protocol"}
       <ContainerEdgeLabel {data} />
-    {:else if data.c4FlowType === "contract"}
+    {:else if data.type === "contract"}
       <ComponentEdgeLabel {data} />
-    {:else if data.c4FlowType === "dataflow"}
+    {:else if data.type === "dataflow"}
       <CodeEdgeLabel {data} />
     {/if}
   {/if}

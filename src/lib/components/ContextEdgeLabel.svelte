@@ -1,23 +1,98 @@
-<!-- ContextEdge.svelte (Context layer) -->
+<!-- ContextEdge.svelte -->
 <script lang="ts">
-  let { data }: { data: Record<string, unknown> } = $props();
+  import { useSvelteFlow } from "@xyflow/svelte";
+  let { id, data }: { id: string; data: Record<string, unknown> } = $props();
+
+  const { updateEdge } = useSvelteFlow();
+
+  let kind = $state((data.kind ?? "") as string);
+  let sync = $state((data.sync ?? false) as boolean);
+  let trustBoundary = $state((data.trustBoundary ?? "internal") as string);
+  let confidentiality = $state((data.confidentiality ?? "public") as string);
+  let channel = $state((data.channel ?? "web") as string);
+  let freq = $state((data.freq ?? "interactive") as string);
+
+  function commit() {
+    updateEdge(id, (edge) => {
+      return {
+        ...edge,
+        data: {
+          ...edge.data,
+          kind,
+          sync,
+          trustBoundary,
+          confidentiality,
+          channel,
+          freq,
+        },
+      };
+    });
+  }
 </script>
 
-<div class="context-edge p-2 rounded border bg-white shadow-sm text-xs">
-  <div><strong>Intent:</strong> {data.intent as string}</div>
-  <div><strong>Direction:</strong> {data.direction as string}</div>
-  <div><strong>Sync:</strong> {(data.sync as boolean) ? "yes" : "no"}</div>
-  <div>
-    <strong>Trust Boundary:</strong>
-    {(data.trustBoundary as boolean) ? "crossed" : "internal"}
+<details
+  class="context-edge max-w-max rounded border shadow-sm text-xs bg-white select-none"
+>
+  <summary
+    class="flex items-center gap-2 px-2 py-1 cursor-pointer hover:bg-slate-100 rounded"
+  >
+    <input
+      type="text"
+      bind:value={kind}
+      onchange={commit}
+      class="font-semibold bg-transparent border-none focus:outline-none"
+    />
+    <span class="uppercase tracking-wide opacity-60 text-[10px]">
+      {sync ? "SYNC" : "ASYNC"}
+    </span>
+  </summary>
+
+  <div class="p-2 space-y-1 leading-snug">
+    <label class="flex items-center gap-1 text-[10px]">
+      <input type="checkbox" bind:checked={sync} onblur={commit} />
+      synchronous
+    </label>
+    <div class="text-[10px]">
+      <strong>Trust Boundary</strong>
+      <input
+        type="text"
+        bind:value={trustBoundary}
+        onblur={commit}
+        class="ml-1 w-20 bg-transparent border-b border-slate-300 text-xs focus:outline-none"
+      />
+    </div>
+    <div class="text-[10px]">
+      <strong>Confidentiality</strong>
+      <input
+        type="text"
+        bind:value={confidentiality}
+        onblur={commit}
+        class="ml-1 w-20 bg-transparent border-b border-slate-300 text-xs focus:outline-none"
+      />
+    </div>
+    <div class="text-[10px]">
+      <strong>Channel</strong>
+      <input
+        type="text"
+        bind:value={channel}
+        onblur={commit}
+        class="ml-1 w-20 bg-transparent border-b border-slate-300 text-xs focus:outline-none"
+      />
+    </div>
+    <div class="text-[10px]">
+      <strong>Frequency</strong>
+      <input
+        type="text"
+        bind:value={freq}
+        onblur={commit}
+        class="ml-1 w-20 bg-transparent border-b border-slate-300 text-xs focus:outline-none"
+      />
+    </div>
   </div>
-  <div><strong>Data Class:</strong> {data.dataClass as string}</div>
-  <div><strong>Channel:</strong> {data.channel as string}</div>
-  <div><strong>Frequency:</strong> {data.freq as string}</div>
-</div>
+</details>
 
 <style>
-  .context-edge div {
-    margin-bottom: 0.25rem;
+  details > summary {
+    list-style: none;
   }
 </style>

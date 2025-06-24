@@ -1,26 +1,6 @@
-export const exampleYaml = `
 # ============================================================
 #  Google-Docs-Clone — C4-Flow DSL (Context layer only)
 # ============================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 nodes:
   # ─── Actors ────────────────────────────────────────────────
@@ -100,9 +80,3 @@ edges:
     confidentiality: internal
     channel: batch
     freq: periodic
-
-`;
-
-export const exampleJSON = `
-
-`;

@@ -12,22 +12,19 @@
 
   import { graph } from "$lib/state/graph.svelte";
 
-  let semDerived = $derived(saveGraphSemantic(graph));
-  let viewDerived = $derived(saveGraphView(graph));
-
-  $inspect(semDerived);
-
-  import Button from "./ui/button/button.svelte";
   import { loadGraph } from "$lib/util/graphIO";
   import { onMount } from "svelte";
 
-  onMount(() => {
-    const newMerged = loadGraph(exampleYaml, exampleJSON);
-    graph.nodes = newMerged.nodes;
-    graph.edges = newMerged.edges;
+  import JSZip from "jszip";
 
-    semDerived = exampleYaml;
-    viewDerived = exampleJSON;
+  import Button from "./ui/button/button.svelte";
+  import { Download, Upload } from "lucide-svelte";
+
+  let semDerived = $derived(saveGraphSemantic(graph));
+  let viewDerived = $derived(saveGraphView(graph));
+
+  onMount(() => {
+    codeToView(exampleYaml, exampleJSON);
   });
 
   const saveKey: Extension = keymap.of([
@@ -41,23 +38,117 @@
     },
   ]);
 
+  function codeToView(newYaml: string, newJSON: string) {
+    const newMerged = loadGraph(newYaml, newJSON);
+    graph.nodes = newMerged.nodes;
+    graph.edges = newMerged.edges;
+
+    semDerived = exampleYaml;
+    viewDerived = exampleJSON;
+  }
+
   function updateGraph() {
     console.log("changed");
 
     const newMerged = loadGraph(semDerived, viewDerived);
     graph.nodes = newMerged.nodes;
     graph.edges = newMerged.edges;
-    console.log(newMerged);
-    // setGraph();
+    // console.log(newMerged);
+    // // setGraph();
+  }
+
+  async function downloadZip() {
+    const zip = new JSZip();
+    zip.file("graph.blueprint.yaml", semDerived);
+    zip.file("view.blueprint.json", viewDerived);
+
+    const blob = await zip.generateAsync({ type: "blob" });
+    triggerDownload(blob, "blueprint.zip");
+  }
+
+  function triggerDownload(blob: Blob, filename: string) {
+    const url = URL.createObjectURL(blob);
+    const a = Object.assign(document.createElement("a"), {
+      href: url,
+      download: filename,
+    });
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  /** handle the <input type="file" …> change event */
+  async function handleZipSelect(e: Event) {
+    const file = (e.currentTarget as HTMLInputElement).files?.[0];
+    if (!file) return; // nothing chosen
+
+    if (!file.name.endsWith(".zip")) {
+      alert("Please select a .zip file");
+      return;
+    }
+
+    try {
+      const zip = await JSZip.loadAsync(file);
+
+      const yamlEntry = zip.file(/\.blueprint\.ya?ml$/i)[0]; // graph.blueprint.yaml
+      const viewEntry = zip.file(/\.blueprint\.json$/i)[0]; // view.blueprint.json
+
+      if (!yamlEntry || !viewEntry) {
+        alert("Zip must contain *.blueprint.yaml and *.blueprint.json");
+        return;
+      }
+
+      /* read both in parallel */
+      const [yamlStr, viewStr] = await Promise.all([
+        yamlEntry.async("text"),
+        viewEntry.async("text"),
+      ]);
+
+      codeToView(yamlStr, viewStr);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to load zip — see console for details");
+    } finally {
+      (e.currentTarget as HTMLInputElement).value = ""; // reset chooser
+    }
   }
 </script>
 
 <!-- ——— Tabs -------------------------------------------------------- -->
-<Tabs.Root value="graphVal" class="flex flex-col h-screen w-[400px]">
-  <!-- Tab bar -->
-  <Tabs.List class="flex-none border-b border-slate-200">
+<Tabs.Root value="graphVal" class="flex flex-col h-screen w-full">
+  <Tabs.List
+    class="w-full flex items-center gap-2
+         flex-nowrap
+         border-b border-slate-200 px-3"
+  >
     <Tabs.Trigger value="graphVal">Graph</Tabs.Trigger>
     <Tabs.Trigger value="viewVal">View</Tabs.Trigger>
+
+    <!-- right-aligned action area -->
+    <span class="ms-auto flex gap-2">
+      <Button
+        variant="secondary"
+        size="icon"
+        class="size-8"
+        onclick={downloadZip}
+      >
+        <Download />
+      </Button>
+    </span>
+
+    <!-- place this anywhere inside the same <Tabs.List> action area -->
+    <label
+      class="inline-flex items-center justify-center size-8 rounded
+         bg-secondary hover:bg-secondary/80 cursor-pointer"
+    >
+      <Upload class="w-4 h-4" />
+      <input
+        id="zipInput"
+        type="file"
+        accept=".zip"
+        class="hidden"
+        onchange={(e) => handleZipSelect(e)}
+      />
+    </label>
   </Tabs.List>
 
   <!-- YAML editor pane -->
@@ -86,10 +177,7 @@
   .editor-shell {
     height: 100%; /* full height of Tabs.Content */
     width: 100%;
-    overflow: auto;
+    /* overflow: auto; */
     box-sizing: border-box;
-  }
-  .editor-shell .cm-editor {
-    height: 100%; /* let CodeMirror stretch */
   }
 </style>

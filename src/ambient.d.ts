@@ -3,7 +3,7 @@ import type { Node, Edge, Position } from "@xyflow/svelte";
 //
 // C4-specific node types
 //
-export type C4NodeType =
+export type type =
   | "system"
   | "actor"
   | "container"
@@ -26,7 +26,7 @@ export type C4EdgeType =
 //
 export interface C4FlowNodeData {
   label: string;
-  c4Type: C4NodeType;
+  type: type;
   parent?: string; // Optional for hierarchy
 }
 
@@ -34,7 +34,7 @@ export interface C4FlowNodeData {
 // Custom data that lives inside each edge’s `.data` field (optional)
 //
 export interface C4FlowEdgeData {
-  c4Type: C4EdgeType;
+  type: C4EdgeType;
 }
 
 //

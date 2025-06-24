@@ -3,7 +3,7 @@
    ---------------------------------------------------------------
    yarn add yaml nanoid            #  or npm i …
 
-   * The YAML file owns **ALL semantic fields** (c4Type, roles, etc.).
+   * The YAML file owns **ALL semantic fields** (type, roles, etc.).
    * The JSON view file stores **ONLY layout data** (pos/size/z).
    * Loader merges them for the canvas.
    * Saver writes the YAML first (overwriting semantics),
@@ -12,12 +12,9 @@
 
 import { parse, stringify } from "yaml";
 import { type NodeSem, type EdgeSem } from "./graphType.ts";
-import {
-  type Node,
-  type Edge,
-  type EdgeMarkerType,
-  MarkerType,
-} from "@xyflow/svelte";
+import { type Node, type Edge, Position, MarkerType } from "@xyflow/svelte";
+
+import dagre from "@dagrejs/dagre";
 
 /* ---------- semantic container as in YAML ---------- */
 export interface GraphSemYAML {
@@ -46,14 +43,84 @@ export interface MergedGraph {
 
 const DEFAULT_SEMANTIC = "graph.bpl.yaml";
 const DEFAULT_VIEW = "graph.sfv.json";
+
+export const DEFAULT_MARKEREND = {
+  type: "arrow",
+  width: 20,
+  height: 20,
+  strokeWidth: 1,
+};
+
+const dagreGraph = new dagre.graphlib.Graph();
+dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+const nodeWidth = 150;
+const nodeHeight = 40;
+
+function getLayoutedElements(nodes: Node[], edges: Edge[], direction = "TB") {
+  const isHorizontal = direction === "LR";
+  dagreGraph.setGraph({
+    rankdir: direction,
+    nodesep: 120,
+    ranksep: 200,
+    edgesep: 20,
+  });
+
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, {
+      width: node.width ?? nodeWidth,
+      height: node.height ?? nodeHeight,
+    });
+  });
+
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target);
+  });
+
+  dagre.layout(dagreGraph);
+
+  const layoutedNodes = nodes.map((node) => {
+    const nodeWithPosition = dagreGraph.node(node.id);
+    node.targetPosition = isHorizontal ? Position.Left : Position.Top;
+    node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom;
+
+    // We are shifting the dagre node position (anchor=center center) to the top left
+    // so it matches the React Flow node anchor point (top left).
+    return {
+      ...node,
+      position: {
+        x: nodeWithPosition.x - nodeWidth / 2,
+        y: nodeWithPosition.y - nodeHeight / 2,
+      },
+    };
+  });
+
+  return { nodes: layoutedNodes, edges };
+}
+
 /* ───────────────────── Loader ───────────────────────── */
 
 export function loadGraph(yamlText: string, viewText: string): MergedGraph {
   const sem = parse(yamlText) as GraphSemYAML;
-  const view = (viewText ? JSON.parse(viewText) : {}) as Partial<GraphViewJSON>;
+
+  if (viewText.trim() === "") {
+    viewText = '{"nodes":[], "edges":[]}';
+  }
+
+  console.log(viewText);
+  const view = (
+    viewText ? JSON.parse(viewText) : { nodes: [], edges: [] }
+  ) as Partial<GraphViewJSON>;
+
+  let missingV = 0;
 
   const nodes: Node[] = Object.entries(sem.nodes ?? {}).map(([id, semNode]) => {
     const v = view.nodes?.find((n) => n.id === id);
+
+    if (!v) {
+      missingV += 1;
+    }
+
     return {
       id,
       type: "c4FlowNode",
@@ -75,9 +142,14 @@ export function loadGraph(yamlText: string, viewText: string): MergedGraph {
       target,
       data: { ...(semEdge as EdgeSem) },
       zIndex: v?.zIndex ?? 1,
-      markerEnd: v?.markerEnd ?? { type: "arrow" },
+      markerEnd: v?.markerEnd ?? DEFAULT_MARKEREND,
+      animated: true,
     };
   });
+
+  if (missingV > nodes.length * 0.2) {
+    return getLayoutedElements(nodes, edges, "LR");
+  }
 
   return { nodes, edges };
 }
@@ -110,12 +182,6 @@ export function saveGraphView(merged: MergedGraph): string {
   const viewStr = JSON.stringify(viewOut, null, 2);
 
   return viewStr;
-
-  // const viewBlob = new Blob([], {
-  //   type: "application/json",
-  // });
-
-  // triggerDownload(viewBlob, DEFAULT_VIEW);
 }
 
 export function saveGraphSemantic(merged: MergedGraph): string {
@@ -143,19 +209,4 @@ export function saveGraphSemantic(merged: MergedGraph): string {
   const yamlStr = stringify({ nodes: outNodes, edges: outEdges });
 
   return yamlStr;
-
-  // const yamlBlob = new Blob([], {
-  //   type: "text/yaml",
-  // });
-
-  // triggerDownload(yamlBlob, DEFAULT_SEMANTIC);
-}
-
-function triggerDownload(blob: Blob, filename: string) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
 }

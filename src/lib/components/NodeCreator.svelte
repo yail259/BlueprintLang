@@ -13,15 +13,14 @@
 
   let open = $state(false);
 
-  let currC4NodeType = $state("component");
+  let currtype = $state("component");
   let currName = $state("");
-
   let exists = $derived(nodes.current.some((node) => node.id === currName));
 
   const opts = ["context", "container", "component", "code"];
 
   function pick(t: string) {
-    currC4NodeType = t;
+    currtype = t;
   }
 
   const { getViewport } = useSvelteFlow();
@@ -31,7 +30,7 @@
     const form = e.currentTarget as HTMLFormElement;
 
     const nameViaFD = new FormData(form).get("name") as string;
-    const roleViaFD = new FormData(form).get("role") as string;
+    // const roleViaFD = new FormData(form).get("role") as string;
 
     const pane = document
       ?.querySelector(".svelte-flow__pane")
@@ -43,11 +42,10 @@
     }
 
     const { width, height } = pane;
-
     const { x, y, zoom } = getViewport();
 
-    const centreX = (-x + width / 2) / zoom;
-    const centreY = (-y + height / 2) / zoom;
+    const centreX = (-x + (width - 140) / 2) / zoom;
+    const centreY = (-y + (height - 80) / 2) / zoom;
 
     const newNode: Node = {
       id: nameViaFD,
@@ -60,14 +58,16 @@
       height: 80,
       data: {
         label: nameViaFD,
-        c4Type: currC4NodeType,
-        role: roleViaFD,
+        type: currtype,
+        // role: roleViaFD,
       },
     };
 
     nodes.update((curr) => {
       return [...curr, newNode];
     });
+
+    currName = "";
   }
 </script>
 
@@ -113,7 +113,7 @@
 
         <!-- ── Type (context / container / component / code) ─────────────── -->
         <div class="grid grid-cols-4 items-center gap-3">
-          <Label for="c4Type">Type</Label>
+          <Label for="type">Type</Label>
 
           <div
             class="col-span-3 grid grid-cols-4 gap-px rounded-lg overflow-hidden border border-border"
@@ -123,7 +123,7 @@
                 onclick={() => pick(t)}
                 class={`w-full text-sm rounded-none
               ${
-                t === currC4NodeType
+                t === currtype
                   ? "bg-primary text-primary-foreground ring-2 ring-ring"
                   : "bg-muted text-muted-foreground hover:bg-muted/70"
               }`}
@@ -137,7 +137,7 @@
         </div>
 
         <!-- ── Role (optional free-text) ──────────────────────────────────── -->
-        <div class="grid grid-cols-4 items-center gap-3">
+        <!-- <div class="grid grid-cols-4 items-center gap-3">
           <Label for="role">Role</Label>
           <Input
             id="role"
@@ -145,7 +145,7 @@
             placeholder="controller / service / repo…"
             class="col-span-3"
           />
-        </div>
+        </div> -->
 
         <!-- ── Action row ────────────────────────────────────────────────── -->
         <div class="flex justify-end gap-4 pt-2">

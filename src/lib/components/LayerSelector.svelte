@@ -4,13 +4,13 @@
   const nodes = useNodes();
   const edges = useEdges();
 
-  let value = $state("1");
+  let value = $state("-1");
 
   function updateLayerVis(layer: number) {
     nodes.update((nodes) => {
       return nodes.map((node) => {
         // @ts-ignore
-        const nodeLayer = getNodeLayer(node.data.c4Type);
+        const nodeLayer = getNodeLayer(node.data.type);
         const visible = nodeLayer === layer || nodeLayer === layer + 1;
         return {
           ...node,
@@ -21,8 +21,9 @@
     edges.update((edges) => {
       return edges.map((edge) => {
         // @ts-ignore
-        const nodeLayer = getEdgeLayer(edge.data.c4FlowType);
-        const visible = nodeLayer === layer || nodeLayer === layer + 1;
+        const nodeLayer = getEdgeLayer(edge.data.type);
+        //  || nodeLayer === layer + 1
+        const visible = nodeLayer === layer;
         return {
           ...edge,
           hidden: !visible,

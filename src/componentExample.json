@@ -10,7 +10,7 @@
       },
       "data": {
         "label": "Editor UI",
-        "c4Type": "component",
+        "type": "component",
         "role": "controller"
       },
       "measured": {
@@ -30,7 +30,7 @@
       },
       "data": {
         "label": "State Store",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -50,7 +50,7 @@
       },
       "data": {
         "label": "Doc Controller",
-        "c4Type": "component",
+        "type": "component",
         "role": "controller"
       },
       "measured": {
@@ -70,7 +70,7 @@
       },
       "data": {
         "label": "Token Validator",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -90,7 +90,7 @@
       },
       "data": {
         "label": "Doc Service",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -109,7 +109,7 @@
       },
       "data": {
         "label": "Session Manager",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -129,7 +129,7 @@
       },
       "data": {
         "label": "OT Engine",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -149,7 +149,7 @@
       },
       "data": {
         "label": "Presence Broadcaster",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -169,7 +169,7 @@
       },
       "data": {
         "label": "JWT Issuer",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -189,7 +189,7 @@
       },
       "data": {
         "label": "Password Hasher",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -208,7 +208,7 @@
       },
       "data": {
         "label": "Document Repo",
-        "c4Type": "component",
+        "type": "component",
         "role": "repository"
       },
       "measured": {
@@ -228,7 +228,7 @@
       },
       "data": {
         "label": "Version Repo",
-        "c4Type": "component",
+        "type": "component",
         "role": "repository"
       },
       "measured": {
@@ -246,7 +246,7 @@
       "target": "cmp.docController",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "contract",
+        "type": "contract",
         "semanticRole": "command",
         "schemaRef": "#/SaveDocRequest",
         "responseSchemaRef": "#/SaveDocResponse",
@@ -263,7 +263,7 @@
       "target": "cmp.tokenValidator",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "contract",
+        "type": "contract",
         "semanticRole": "query",
         "schemaRef": "#/TokenPayload",
         "responseSchemaRef": "#/TokenStatus",
@@ -280,7 +280,7 @@
       "target": "cmp.docService",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "contract",
+        "type": "contract",
         "semanticRole": "command",
         "schemaRef": "#/DocCommand",
         "responseSchemaRef": "#/DocResult",
@@ -298,7 +298,7 @@
       "target": "cmp.docRepo",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "contract",
+        "type": "contract",
         "semanticRole": "command",
         "schemaRef": "#/DocEntity",
         "responseSchemaRef": null,
@@ -315,7 +315,7 @@
       "target": "cmp.versionRepo",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "contract",
+        "type": "contract",
         "semanticRole": "command",
         "schemaRef": "#/DocVersion",
         "responseSchemaRef": null,
@@ -332,7 +332,7 @@
       "target": "cmp.sessionMgr",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "contract",
+        "type": "contract",
         "semanticRole": "query",
         "schemaRef": "#/SessionStateReq",
         "responseSchemaRef": "#/SessionStateRes",
@@ -349,7 +349,7 @@
       "target": "cmp.sessionMgr",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "contract",
+        "type": "contract",
         "semanticRole": "event",
         "schemaRef": "#/PresenceUpdate",
         "sync": false,
@@ -365,7 +365,7 @@
       "target": "cmp.otEngine",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "contract",
+        "type": "contract",
         "semanticRole": "stream",
         "schemaRef": "#/OTOperation",
         "sync": false,
@@ -381,7 +381,7 @@
       "target": "cmp.tokenValidator",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "contract",
+        "type": "contract",
         "semanticRole": "event",
         "schemaRef": "#/TokenIssued",
         "sync": false,

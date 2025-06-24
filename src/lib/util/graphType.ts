@@ -7,25 +7,25 @@ export interface NodeBase {
 
 /* Context ─ actor / external / internal system */
 export interface ContextNode extends NodeBase {
-  c4Type: "context";
+  type: "context";
   role: "actor" | "externalSystem" | "internalSystem";
 }
 
 /* Container ─ services, DBs, queues … */
 export interface ContainerNode extends NodeBase {
-  c4Type: "container";
+  type: "container";
   role: "api" | "frontend" | "infra" | string;
 }
 
 /* Component */
 export interface ComponentNode extends NodeBase {
-  c4Type: "component";
+  type: "component";
   role: "controller" | "service" | "repository" | string;
 }
 
 /* Code */
 export interface CodeNode extends NodeBase {
-  c4Type: "code";
+  type: "code";
   role: "class" | "function" | "test" | string;
   tags?: string[];
 }
@@ -35,12 +35,12 @@ export type NodeSem = ContextNode | ContainerNode | ComponentNode | CodeNode;
 
 /* ---------- optional helpers ---------- */
 export const isContextNode = (n: NodeSem): n is ContextNode =>
-  n.c4Type === "context";
+  n.type === "context";
 export const isContainerNode = (n: NodeSem): n is ContainerNode =>
-  n.c4Type === "container";
+  n.type === "container";
 export const isComponentNode = (n: NodeSem): n is ComponentNode =>
-  n.c4Type === "component";
-export const isCodeNode = (n: NodeSem): n is CodeNode => n.c4Type === "code";
+  n.type === "component";
+export const isCodeNode = (n: NodeSem): n is CodeNode => n.type === "code";
 
 /* ──────────────── edges.ts ────────────────────────── */
 export interface EdgeBase {
@@ -51,7 +51,7 @@ export interface EdgeBase {
 
 /* 1 ▸ Interaction (Context layer) */
 export interface InteractionEdge extends EdgeBase {
-  c4FlowType: "interaction";
+  type: "interaction";
   kind: string; // login, upload, …
   direction: "->" | "<-";
   sync: boolean;
@@ -63,7 +63,7 @@ export interface InteractionEdge extends EdgeBase {
 
 /* 2 ▸ Protocol (Container layer) */
 export interface ProtocolEdge extends EdgeBase {
-  c4FlowType: "protocol";
+  type: "protocol";
   kind: "request" | "stream" | "pub/sub";
   tech: "REST" | "gRPC" | "WebSocket" | "Kafka" | string;
   direction: "->" | "<-";
@@ -79,7 +79,7 @@ export interface ProtocolEdge extends EdgeBase {
 
 /* 3 ▸ Contract (Component layer) */
 export interface ContractEdge extends EdgeBase {
-  c4FlowType: "contract";
+  type: "contract";
   kind: "command" | "query" | "event";
   direction: "->" | "<-";
   sync: boolean;
@@ -90,7 +90,7 @@ export interface ContractEdge extends EdgeBase {
 
 /* 4 ▸ Data-flow (Code layer) */
 export interface DataFlowEdge extends EdgeBase {
-  c4FlowType: "dataflow";
+  type: "dataflow";
   kind: "call" | "read" | "transform";
   direction: "->" | "<-";
   sync: boolean;
@@ -109,10 +109,10 @@ export type EdgeSem =
 
 /* ---------- helpers ---------- */
 export const isInteraction = (e: EdgeSem): e is InteractionEdge =>
-  e.c4FlowType === "interaction";
+  e.type === "interaction";
 export const isProtocol = (e: EdgeSem): e is ProtocolEdge =>
-  e.c4FlowType === "protocol";
+  e.type === "protocol";
 export const isContract = (e: EdgeSem): e is ContractEdge =>
-  e.c4FlowType === "contract";
+  e.type === "contract";
 export const isDataFlow = (e: EdgeSem): e is DataFlowEdge =>
-  e.c4FlowType === "dataflow";
+  e.type === "dataflow";

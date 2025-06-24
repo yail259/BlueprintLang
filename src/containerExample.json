@@ -1,11 +1,11 @@
 {
   "nodes": [
-    { "id": "ctr.frontend", "type": "default", "position": { "x": 50, "y": 50 }, "data": { "label": "Web Front-End", "c4Type": "container" } },
-    { "id": "ctr.api", "type": "default", "position": { "x": 300, "y": 50 }, "data": { "label": "API Gateway", "c4Type": "container" } },
-    { "id": "ctr.realtime", "type": "default", "position": { "x": 550, "y": 50 }, "data": { "label": "Real-Time Hub", "c4Type": "container" } },
-    { "id": "ctr.auth", "type": "default", "position": { "x": 300, "y": 200 }, "data": { "label": "Auth Service", "c4Type": "container" } },
-    { "id": "ctr.storage", "type": "default", "position": { "x": 550, "y": 200 }, "data": { "label": "Doc Storage", "c4Type": "container" } },
-    { "id": "ctr.redis", "type": "default", "position": { "x": 800, "y": 50 }, "data": { "label": "Redis Cache", "c4Type": "container" } }
+    { "id": "ctr.frontend", "type": "default", "position": { "x": 50, "y": 50 }, "data": { "label": "Web Front-End", "type": "container" } },
+    { "id": "ctr.api", "type": "default", "position": { "x": 300, "y": 50 }, "data": { "label": "API Gateway", "type": "container" } },
+    { "id": "ctr.realtime", "type": "default", "position": { "x": 550, "y": 50 }, "data": { "label": "Real-Time Hub", "type": "container" } },
+    { "id": "ctr.auth", "type": "default", "position": { "x": 300, "y": 200 }, "data": { "label": "Auth Service", "type": "container" } },
+    { "id": "ctr.storage", "type": "default", "position": { "x": 550, "y": 200 }, "data": { "label": "Doc Storage", "type": "container" } },
+    { "id": "ctr.redis", "type": "default", "position": { "x": 800, "y": 50 }, "data": { "label": "Redis Cache", "type": "container" } }
   ],
 
   "edges": [
@@ -15,7 +15,7 @@
       "target": "ctr.auth",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "protocol",
+        "type": "protocol",
         "tech": "REST",
         "endpoint": "POST /login",
         "method": "POST",
@@ -34,7 +34,7 @@
       "target": "ctr.api",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "protocol",
+        "type": "protocol",
         "tech": "gRPC",
         "endpoint": "ValidateToken()",
         "direction": "->",
@@ -52,7 +52,7 @@
       "target": "ctr.realtime",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "protocol",
+        "type": "protocol",
         "tech": "REST",
         "endpoint": "POST /room",
         "direction": "->",
@@ -70,7 +70,7 @@
       "target": "ctr.realtime",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "protocol",
+        "type": "protocol",
         "tech": "WebSocket",
         "endpoint": "wss://realtime/join",
         "direction": "->",
@@ -89,7 +89,7 @@
       "target": "ctr.redis",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "protocol",
+        "type": "protocol",
         "tech": "Redis",
         "endpoint": "PUBLISH doc:1234",
         "direction": "->",
@@ -107,7 +107,7 @@
       "target": "ctr.storage",
       "type": "c4FlowEdge",
       "data": {
-        "c4Type": "protocol",
+        "type": "protocol",
         "tech": "gRPC",
         "endpoint": "SaveDocument()",
         "direction": "->",

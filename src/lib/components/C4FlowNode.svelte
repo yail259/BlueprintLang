@@ -9,9 +9,9 @@
     type Node,
   } from "@xyflow/svelte";
   import { Baby } from "lucide-svelte";
-  import { nanoid } from "nanoid";
 
   import * as Dialog from "$lib/components/ui/dialog/index.js";
+  import { Label } from "$lib/components/ui/label/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import { Button } from "$lib/components/ui/button/index.js";
 
@@ -22,9 +22,8 @@
 
   let label = $state(data.label);
 
-  // function wait(ms: number) {
-  //   return new Promise((resolve) => setTimeout(resolve, ms));
-  // }
+  let currName = $state("");
+  let exists = $derived(nodes.current.some((node) => node.id === currName));
 
   let open = $state(false);
 
@@ -35,9 +34,9 @@
     const nameViaFD = new FormData(form).get("name") as string;
 
     const nextLayer =
-      data.c4Type === "context"
+      data.type === "context"
         ? "container"
-        : data.c4Type === "container"
+        : data.type === "container"
           ? "component"
           : "code";
 
@@ -56,8 +55,7 @@
       height: (height ?? 80) * 0.5,
       data: {
         label: nameViaFD,
-        c4Type: nextLayer,
-        role: "function",
+        type: nextLayer,
       },
     };
 
@@ -112,8 +110,8 @@
   />
 
   <!-- custom details (inline, no separate components) -->
-  {#if data}
-    {#if data.c4Type === "code"}
+  <!-- {#if data}
+    {#if data.type === "code"}
       <small class="nodrag" style="opacity:0.7;">
         {data.role}
         {#if data.tags?.length}
@@ -123,24 +121,20 @@
     {:else}
       <small class="nodrag" style="opacity:0.7;">{data.role}</small>
     {/if}
-  {/if}
+  {/if} -->
 
   <!-- plus button rendered only when selected -->
   {#if selected}
     <Dialog.Root bind:open>
-      <Dialog.Trigger
-        ><button
-          class="
-        nodrag absolute -top-2 -right-2 /* ⭢ -10 px */
-        w-8 h-8 rounded-full /* 24 px circle */
-        bg-primary hover:bg-ring /* “primary” tint + hover */
-        text-white flex items-center justify-center
-        cursor-pointer
-      "
+      <Dialog.Trigger>
+        <!-- Replace the existing circle with a styled Button component -->
+        <Button
+          class="nodrag absolute -top-6 -right-3 px-3 text-xs
+                bg-primary text-white hover:bg-primary/90"
           title="Add child node"
         >
-          <Baby class="w-4 h-4" />
-        </button>
+          + Child
+        </Button>
       </Dialog.Trigger>
 
       <Dialog.Content>
@@ -153,15 +147,40 @@
               open = false;
             }}
           >
-            <Dialog.Title class="text-xl font-semibold"
-              >Name your new child node!</Dialog.Title
-            >
+            <Dialog.Title class="text-xl font-semibold">
+              Name your new child node!
+            </Dialog.Title>
 
-            <!-- field row: label + input in a simple grid -->
-            <div class="grid grid-cols-4 items-center gap-3">
-              <!-- Input keeps its own styling, just fills remaining space -->
-              <Input id="name" name="name" class="col-span-3" />
-              <Button type="submit">Create</Button>
+            <!-- field + hint + submit, all in one grid  -->
+            <div class="grid grid-cols-4 gap-3 items-start">
+              <Label
+                for="name"
+                class="col-span-1 text-right text-sm font-medium"
+              >
+                Label
+              </Label>
+
+              <Input
+                id="name"
+                name="name"
+                class="col-span-3"
+                bind:value={currName}
+              />
+
+              {#if exists}
+                <p class="col-span-4 -mt-2 text-xs text-red-600">
+                  A node with this ID already exists.
+                </p>
+              {/if}
+
+              <!-- full-width button aligned under inputs -->
+              <Button
+                class="col-span-4 mt-4 w-full"
+                disabled={exists}
+                type="submit"
+              >
+                Create
+              </Button>
             </div>
           </form>
         </Dialog.Header>

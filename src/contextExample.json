@@ -1,15 +1,15 @@
 {
   "nodes": [
-    { "id": "actor.user",     "type": "default", "position": { "x":  50, "y":  50 }, "data": { "label": "User",          "c4Type": "actor"   } },
-    { "id": "system.portal",  "type": "default", "position": { "x": 250, "y":  50 }, "data": { "label": "Portal App",   "c4Type": "system"  } },
-    { "id": "system.smsGateway","type":"default","position": { "x": 450, "y":  50 }, "data": { "label": "SMS Gateway",  "c4Type": "system"  } },
+    { "id": "actor.user",     "type": "default", "position": { "x":  50, "y":  50 }, "data": { "label": "User",          "type": "actor"   } },
+    { "id": "system.portal",  "type": "default", "position": { "x": 250, "y":  50 }, "data": { "label": "Portal App",   "type": "system"  } },
+    { "id": "system.smsGateway","type":"default","position": { "x": 450, "y":  50 }, "data": { "label": "SMS Gateway",  "type": "system"  } },
 
-    { "id": "system.erp",     "type": "default", "position": { "x":  50, "y": 200 }, "data": { "label": "ERP",           "c4Type": "system"  } },
-    { "id": "system.s3Bucket","type":"default", "position": { "x": 250, "y": 200 }, "data": { "label": "S3 Bucket",     "c4Type": "system"  } },
+    { "id": "system.erp",     "type": "default", "position": { "x":  50, "y": 200 }, "data": { "label": "ERP",           "type": "system"  } },
+    { "id": "system.s3Bucket","type":"default", "position": { "x": 250, "y": 200 }, "data": { "label": "S3 Bucket",     "type": "system"  } },
 
-    { "id": "system.github",  "type": "default", "position": { "x": 450, "y": 200 }, "data": { "label": "GitHub",        "c4Type": "system"  } },
-    { "id": "system.cicd",    "type": "default", "position": { "x": 650, "y": 200 }, "data": { "label": "CI/CD Runner",  "c4Type": "system"  } },
-    { "id": "system.analytics","type":"default","position": { "x": 650, "y":  50 }, "data": { "label": "Analytics Svc", "c4Type": "system"  } }
+    { "id": "system.github",  "type": "default", "position": { "x": 450, "y": 200 }, "data": { "label": "GitHub",        "type": "system"  } },
+    { "id": "system.cicd",    "type": "default", "position": { "x": 650, "y": 200 }, "data": { "label": "CI/CD Runner",  "type": "system"  } },
+    { "id": "system.analytics","type":"default","position": { "x": 650, "y":  50 }, "data": { "label": "Analytics Svc", "type": "system"  } }
   ],
 
   "edges": [
@@ -18,7 +18,7 @@
     "source": "actor.user",
     "target": "system.portal",
     "type": "c4FlowEdge",
-    "c4Type": "interaction",
+    "type": "interaction",
     "data": {
       "intent": "login",
       "direction": "->",
@@ -35,7 +35,7 @@
     "source": "system.portal",
     "target": "system.smsGateway",
     "type": "c4FlowEdge",
-    "c4Type": "interaction",
+    "type": "interaction",
     "data": {
       "intent": "send OTP",
       "direction": "->",
@@ -52,7 +52,7 @@
     "source": "system.erp",
     "target": "system.s3Bucket",
     "type": "c4FlowEdge",
-    "c4Type": "interaction",
+    "type": "interaction",
     "data": {
       "intent": "export ledger",
       "direction": "->",
@@ -69,7 +69,7 @@
     "source": "system.github",
     "target": "system.cicd",
     "type": "c4FlowEdge",
-    "c4Type": "interaction",
+    "type": "interaction",
     "data": {
       "intent": "webhook push",
       "direction": "->",
@@ -86,7 +86,7 @@
     "source": "system.analytics",
     "target": "system.portal",
     "type": "c4FlowEdge",
-    "c4Type": "interaction",
+    "type": "interaction",
     "data": {
       "intent": "pull metrics",
       "direction": "<-",

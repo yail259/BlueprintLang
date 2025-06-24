@@ -1,0 +1,16 @@
+nodes:
+  label:
+    type: context
+
+  label2:
+    type: context
+
+edges:
+  label-label2:
+    type: interaction
+    sync: true
+    trust: external
+    confidentiality: secret
+    channel: web
+    freq: interactive
+    kind: login

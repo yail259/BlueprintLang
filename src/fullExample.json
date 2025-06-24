@@ -14,7 +14,7 @@
       "targetPosition": "left",
       "data": {
         "label": "User",
-        "c4Type": "context",
+        "type": "context",
         "role": "actor"
       },
       "measured": {
@@ -39,7 +39,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Collab-Docs (FIX ME!!!)",
-        "c4Type": "context",
+        "type": "context",
         "role": "internalSystem"
       },
       "measured": {
@@ -64,7 +64,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Auth0",
-        "c4Type": "context",
+        "type": "context",
         "role": "externalSystem"
       },
       "measured": {
@@ -91,7 +91,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Web Frontend",
-        "c4Type": "container",
+        "type": "container",
         "role": "frontend"
       },
       "measured": {
@@ -118,7 +118,7 @@
       "targetPosition": "left",
       "data": {
         "label": "API Gateway",
-        "c4Type": "container",
+        "type": "container",
         "role": "api"
       },
       "measured": {
@@ -145,7 +145,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Realtime Hub",
-        "c4Type": "container",
+        "type": "container",
         "role": "eventSink"
       },
       "measured": {
@@ -172,7 +172,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Auth Service",
-        "c4Type": "container",
+        "type": "container",
         "role": "auth"
       },
       "measured": {
@@ -199,7 +199,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Doc Storage",
-        "c4Type": "container",
+        "type": "container",
         "role": "infra"
       },
       "measured": {
@@ -226,7 +226,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Editor UI",
-        "c4Type": "component",
+        "type": "component",
         "role": "controller"
       },
       "measured": {
@@ -253,7 +253,7 @@
       "targetPosition": "left",
       "data": {
         "label": "State Store",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -280,7 +280,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Doc Controller",
-        "c4Type": "component",
+        "type": "component",
         "role": "controller"
       },
       "measured": {
@@ -307,7 +307,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Token Validator",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -334,7 +334,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Doc Service",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -361,7 +361,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Session Mgr",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -388,7 +388,7 @@
       "targetPosition": "left",
       "data": {
         "label": "OT Engine",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -415,7 +415,7 @@
       "targetPosition": "left",
       "data": {
         "label": "JWT Issuer",
-        "c4Type": "component",
+        "type": "component",
         "role": "service"
       },
       "measured": {
@@ -442,7 +442,7 @@
       "targetPosition": "left",
       "data": {
         "label": "Doc Repo",
-        "c4Type": "component",
+        "type": "component",
         "role": "repository"
       },
       "measured": {
@@ -469,7 +469,7 @@
       "targetPosition": "left",
       "data": {
         "label": "docService.js",
-        "c4Type": "code",
+        "type": "code",
         "role": "class",
         "tags": [
           "file"
@@ -499,7 +499,7 @@
       "targetPosition": "left",
       "data": {
         "label": "validate()",
-        "c4Type": "code",
+        "type": "code",
         "role": "function"
       },
       "measured": {
@@ -526,7 +526,7 @@
       "targetPosition": "left",
       "data": {
         "label": "save()",
-        "c4Type": "code",
+        "type": "code",
         "role": "function"
       },
       "measured": {
@@ -553,7 +553,7 @@
       "targetPosition": "left",
       "data": {
         "label": "emitEvent()",
-        "c4Type": "code",
+        "type": "code",
         "role": "function"
       },
       "measured": {
@@ -579,7 +579,7 @@
         "strokeWidth": "1"
       },
       "data": {
-        "c4FlowType": "interaction",
+        "type": "interaction",
         "intent": "use app",
         "direction": "->",
         "sync": true,
@@ -604,7 +604,7 @@
         "strokeWidth": "1"
       },
       "data": {
-        "c4FlowType": "interaction",
+        "type": "interaction",
         "intent": "OAuth redirect",
         "direction": "->",
         "sync": true,
@@ -629,7 +629,7 @@
         "strokeWidth": "1"
       },
       "data": {
-        "c4FlowType": "protocol",
+        "type": "protocol",
         "tech": "REST",
         "endpoint": "POST /docs",
         "method": "POST",
@@ -655,7 +655,7 @@
         "strokeWidth": "1"
       },
       "data": {
-        "c4FlowType": "protocol",
+        "type": "protocol",
         "tech": "WebSocket",
         "endpoint": "wss://rt/join",
         "direction": "->",
@@ -679,7 +679,7 @@
         "strokeWidth": "1"
       },
       "data": {
-        "c4FlowType": "contract",
+        "type": "contract",
         "semanticRole": "command",
         "schemaRef": "#/SaveDoc",
         "sync": true,
@@ -703,7 +703,7 @@
         "strokeWidth": "1"
       },
       "data": {
-        "c4FlowType": "contract",
+        "type": "contract",
         "semanticRole": "command",
         "schemaRef": "#/DocEntity",
         "sync": true,
@@ -727,7 +727,7 @@
         "strokeWidth": "1"
       },
       "data": {
-        "c4FlowType": "dataflow",
+        "type": "dataflow",
         "operation": "call",
         "datatype": "ValidatedDoc",
         "async": false,
@@ -751,7 +751,7 @@
         "strokeWidth": "1"
       },
       "data": {
-        "c4FlowType": "dataflow",
+        "type": "dataflow",
         "operation": "call",
         "datatype": "EventPayload",
         "async": false,

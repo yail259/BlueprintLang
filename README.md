@@ -8,57 +8,57 @@ nodes:
   # Context layer
   actor.user:
     label: User
-    c4Type: context
+    type: context
     role: actor
 
   system.collab:
     label: Collab-Docs
-    c4Type: context
+    type: context
     role: internalSystem
 
   # Container layer
   ctr.frontend:
     parent: system.collab
     label: Web Frontend
-    c4Type: container
+    type: container
     role: frontend
 
   ctr.api:
     parent: system.collab
     label: API Gateway
-    c4Type: container
+    type: container
     role: api
 
   ctr.storage:
     parent: system.collab
     label: Doc Storage
-    c4Type: container
+    type: container
     role: infra
 
   # Component layer
   cmp.editorUI:
     parent: ctr.frontend
     label: Editor UI
-    c4Type: component
+    type: component
     role: controller
 
   cmp.docService:
     parent: ctr.api
     label: Doc Service
-    c4Type: component
+    type: component
     role: service
 
   cmp.docRepo:
     parent: ctr.storage
     label: Doc Repo
-    c4Type: component
+    type: component
     role: repository
 
   # Code layer (single illustrative function)
   func.save:
     parent: cmp.docService
     label: save()
-    c4Type: code
+    type: code
     role: function
 
 # ──────────────── EDGES ─────────────────────────────────────
@@ -67,7 +67,7 @@ edges:
   ctx_login:
     source: actor.user
     target: system.collab
-    c4FlowType: interaction
+    type: interaction
     kind: login                 # human-readable purpose
     direction: "->"
     sync: true
@@ -80,7 +80,7 @@ edges:
   prot_front_to_api:
     source: ctr.frontend
     target: ctr.api
-    c4FlowType: protocol
+    type: protocol
     kind: request
     tech: REST
     direction: "->"
@@ -97,7 +97,7 @@ edges:
   contract_ui_to_service:
     source: cmp.editorUI
     target: cmp.docService
-    c4FlowType: contract
+    type: contract
     kind: command
     direction: "->"
     sync: true
@@ -109,7 +109,7 @@ edges:
   data_save_to_repo:
     source: func.save
     target: cmp.docRepo
-    c4FlowType: dataflow
+    type: dataflow
     kind: call
     direction: "->"
     sync: true
@@ -128,19 +128,19 @@ For instance:
 nodes:
   actor.user:
     label: User
-    c4Type: context
+    type: context
     role: actor
 
   system.collab:
     label: Collab-Docs
-    c4Type: context
+    type: context
     role: internalSystem
 
 edges:
   ctx_login:
     source: actor.user
     target: system.collab
-    c4FlowType: interaction
+    type: interaction
     kind: login
     direction: "->"
     sync: true
@@ -172,7 +172,7 @@ Combines to make
   nodes: [
     {
       id: "actor.user",
-      data: { label: "User", c4Type: "context", role: "actor" },
+      data: { label: "User", type: "context", role: "actor" },
       position: { x: 40, y: 60 },
       width: 120,
       height: 40,
@@ -182,7 +182,7 @@ Combines to make
       id: "system.collab",
       data: {
         label: "Collab-Docs",
-        c4Type: "context",
+        type: "context",
         role: "internalSystem"
       },
       position: { x: 280, y: 60 },
@@ -197,7 +197,7 @@ Combines to make
       data: {
         source: "actor.user",
         target: "system.collab",
-        c4FlowType: "interaction",
+        type: "interaction",
         kind: "login",
         direction: "->",
         sync: true,
