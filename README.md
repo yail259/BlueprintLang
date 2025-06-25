@@ -1,75 +1,38 @@
 # BlueprintLang
 
-We can describe complex software systems at various layers of abstraction. Modelling techniques such as C4-flow allow us to integrate structural information as well as behavioural relationships into a unified diagram. Below is a formal implementation of the modelling technique using a YAML based language. It's easily parsable, machine and human readable/editable, and can be visualised with the accompanying web app.
+We can describe complex software systems at various layers of abstraction. BlueprintLang is a YAML based language which codifies such descriptions and allows you render them into visual diagrams with accompanying tooling. It's easily parsable, machine and human readable/editable, expressive and hackable. 
+
+For instance, modelling techniques such as [C4-flow](https://github.com/yail259/C4-Flow) allow us to integrate structural information as well as behavioural relationships into a unified diagram and provides 4 layers of abstraction. This can be easily represented in BlueprintLang and capture software architecture in a powerful, intuitive way.
 
 ```
 # ─────────── NODES ───────────────────────────────────────────
 nodes:
-  # Context layer
-  actor.user:
-    label: User
-    type: context
-    role: actor
-
-  system.collab:
-    label: Collab-Docs
-    type: context
-    role: internalSystem
-
-  # Container layer
-  ctr.frontend:
-    parent: system.collab
-    label: Web Frontend
-    type: container
-    role: frontend
-
-  ctr.api:
-    parent: system.collab
-    label: API Gateway
-    type: container
-    role: api
-
-  ctr.storage:
-    parent: system.collab
-    label: Doc Storage
-    type: container
-    role: infra
-
-  # Component layer
-  cmp.editorUI:
-    parent: ctr.frontend
-    label: Editor UI
-    type: component
-    role: controller
-
-  cmp.docService:
-    parent: ctr.api
-    label: Doc Service
-    type: component
-    role: service
-
-  cmp.docRepo:
-    parent: ctr.storage
-    label: Doc Repo
-    type: component
-    role: repository
-
-  # Code layer (single illustrative function)
-  func.save:
-    parent: cmp.docService
-    label: save()
-    type: code
-    role: function
+  # all nodes must have a unique id
+  id:
+    label: A display friendly name, can be the same or different to id.
+    type: >
+		The type of the node, for example 'context' in C4-Flow. Can be used to filter the view.
+    kind?: An optional additional high level description, e.g. 'user'.
+	comment?: An optional natural language description.
 
 # ──────────────── EDGES ─────────────────────────────────────
 edges:
-  # 1 ▸ Interaction  (Context → Context)
+  # all edges must have a unique id
+  id:
+    source: id of the node initiating interaction or emitting data.
+    target: id of the node handling interaction or accepting data.
+    type: The type of the edge, for example 'interaction' in C4-Flow. Can be used to filter the view.
+    kind?: An optional additional high level description, e.g. 'user'.
+    sync?: A boolean of whether the interaction is synchronous
+    <any>?: Any additional parameters can be attached as extension data in terms of usefulness in domain. See below for some examples based on C4-Flow model:
+
+# Example Edges
+# 1 ▸ Interaction  (Context → Context)
   ctx_login:
     source: actor.user
     target: system.collab
-    type: interaction
-    kind: login                 # human-readable purpose
-    direction: "->"
+    c4FlowType: interaction
+    kind: login            
     sync: true
     trustBoundary: external
     confidentiality: confidential
@@ -119,7 +82,7 @@ edges:
     returns: boolean
 ```
 
-One can then parse this language, merging it for example with a json with visual rendering information, to be visualised with the accompanying visualisation tool.
+One can then parse this language, merging it with a file containing visual rendering information (such as a JSON), to be visualised in any visualisation tool. Below shows the inner workings of how the accompanying BlueprintCode web app renders the graph under the hood, but it's implementation agnostic so you can build your own renderer if needed!
 
 For instance:
 
@@ -129,12 +92,12 @@ nodes:
   actor.user:
     label: User
     type: context
-    role: actor
+    kind: actor
 
   system.collab:
     label: Collab-Docs
     type: context
-    role: internalSystem
+    kind: internalSystem
 
 edges:
   ctx_login:
@@ -211,7 +174,6 @@ Combines to make
 }
 ```
 
-Which can be rendered to the following using the accompanying web app Blueprint.
 
 ---
 

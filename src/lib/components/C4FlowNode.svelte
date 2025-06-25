@@ -20,7 +20,7 @@
   const { updateNodeData } = useSvelteFlow();
   const nodes = useNodes();
 
-  let label = $state(data.label);
+  let label = $derived(data.label);
 
   let currName = $state("");
   let exists = $derived(nodes.current.some((node) => node.id === currName));

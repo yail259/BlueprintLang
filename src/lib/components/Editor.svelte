@@ -5,6 +5,7 @@
   import { keymap } from "@codemirror/view";
   import type { Extension } from "@codemirror/state";
   import { yaml } from "@codemirror/lang-yaml";
+  // import { ayuLight } from "thememirror";
 
   import { saveGraphSemantic, saveGraphView } from "$lib/util/graphIO";
 
@@ -27,16 +28,16 @@
     codeToView(exampleYaml, exampleJSON);
   });
 
-  const saveKey: Extension = keymap.of([
-    {
-      key: "Mod-s", // “Mod” = Ctrl on Win/Linux, ⌘ on macOS
-      preventDefault: true,
-      run() {
-        updateGraph();
-        return true; // signals “handled”
-      },
-    },
-  ]);
+  // const saveKey: Extension = keymap.of([
+  //   {
+  //     key: "Mod-s", // “Mod” = Ctrl on Win/Linux, ⌘ on macOS
+  //     preventDefault: true,
+  //     run() {
+  //       updateGraph();
+  //       return true; // signals “handled”
+  //     },
+  //   },
+  // ]);
 
   function codeToView(newYaml: string, newJSON: string) {
     const newMerged = loadGraph(newYaml, newJSON);
@@ -48,7 +49,7 @@
   }
 
   function updateGraph() {
-    console.log("changed");
+    // console.log("changed");
 
     const newMerged = loadGraph(semDerived, viewDerived);
     graph.nodes = newMerged.nodes;

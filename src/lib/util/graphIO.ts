@@ -99,7 +99,6 @@ function getLayoutedElements(nodes: Node[], edges: Edge[], direction = "TB") {
 }
 
 /* ───────────────────── Loader ───────────────────────── */
-
 export function loadGraph(yamlText: string, viewText: string): MergedGraph {
   const sem = parse(yamlText) as GraphSemYAML;
 
@@ -107,7 +106,7 @@ export function loadGraph(yamlText: string, viewText: string): MergedGraph {
     viewText = '{"nodes":[], "edges":[]}';
   }
 
-  console.log(viewText);
+  // console.log(viewText);
   const view = (
     viewText ? JSON.parse(viewText) : { nodes: [], edges: [] }
   ) as Partial<GraphViewJSON>;

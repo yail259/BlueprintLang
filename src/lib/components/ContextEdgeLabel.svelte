@@ -5,12 +5,12 @@
 
   const { updateEdge } = useSvelteFlow();
 
-  let kind = $state((data.kind ?? "") as string);
-  let sync = $state((data.sync ?? false) as boolean);
-  let trustBoundary = $state((data.trustBoundary ?? "internal") as string);
-  let confidentiality = $state((data.confidentiality ?? "public") as string);
-  let channel = $state((data.channel ?? "web") as string);
-  let freq = $state((data.freq ?? "interactive") as string);
+  let kind = $derived((data.kind ?? "") as string);
+  let sync = $derived((data.sync ?? false) as boolean);
+  let trustBoundary = $derived((data.trustBoundary ?? "internal") as string);
+  let confidentiality = $derived((data.confidentiality ?? "public") as string);
+  let channel = $derived((data.channel ?? "web") as string);
+  let freq = $derived((data.freq ?? "interactive") as string);
 
   function commit() {
     updateEdge(id, (edge) => {

@@ -38,6 +38,7 @@
 		"codemirror": "^6.0.2",
 		"jszip": "^3.10.1",
 		"lucide-svelte": "^0.518.0",
+		"openai": "^5.7.0",
 		"svelte-codemirror-editor": "^1.4.1",
 		"yaml": "^2.8.0"
 	}

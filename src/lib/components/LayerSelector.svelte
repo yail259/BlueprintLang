@@ -44,8 +44,33 @@
     return i;
   }
 
+  function allVis() {
+    nodes.update((nodes) => {
+      return nodes.map((node) => {
+        return {
+          ...node,
+          hidden: false,
+        };
+      });
+    });
+    edges.update((edges) => {
+      return edges.map((edge) => {
+        return {
+          ...edge,
+          hidden: false,
+        };
+      });
+    });
+  }
+
   function changeVal(newVal: string) {
     if (value === newVal) {
+      return;
+    }
+
+    if (newVal === "-1") {
+      value = newVal;
+      allVis();
       return;
     }
 
@@ -55,6 +80,18 @@
 </script>
 
 <div class="flex flex-row space-x-2">
+  <button
+    class="px-3 py-1 rounded text-sm"
+    style="border: {value === '-1'
+      ? '2px solid #3b82f6'
+      : '1px solid #d1d5db'}; background-color: {value === '-1'
+      ? '#eff6ff'
+      : '#ffffff'};"
+    onclick={() => changeVal("-1")}
+  >
+    All
+  </button>
+
   <button
     class="px-3 py-1 rounded text-sm"
     style="border: {value === '0'
