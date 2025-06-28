@@ -10,6 +10,7 @@
     type Connection,
     type Edge,
     type EdgeMarkerType,
+    useNodes,
   } from "@xyflow/svelte";
 
   import LayerSelector from "$lib/components/LayerSelector.svelte";
@@ -26,29 +27,33 @@
 
   const nodeTypes: NodeTypes = { c4FlowNode: C4FlowNode };
 
-  function onConnect(c: Connection): Edge {
-    console.log(c);
-    // const id = `${source}-${target}-${Date.now()}`;
-    // graph.edges = [
-    //   ...graph.edges,
-    // return false;
-    return {
-      id: "test",
+  const nodes = useNodes();
+
+  function onConnect(c: Connection): Edge | void {
+    // console.log(c);
+    const id = `${c.source}-${c.target}`;
+    
+    const source = nodes.current.find(n => n.id === c.source)!;
+    const target = nodes.current.find(n => n.id === c.target)!;
+
+    if (source.data.type != target.data.type) {
+      alert("Can't connect between different layers");
+      return;
+    }
+
+    const newEdge = {
+      id,
       source: c.source,
       target: c.target,
       type: "c4FlowEdge",
       animated: true,
+      zIndex: 1,
       markerEnd: DEFAULT_MARKEREND as EdgeMarkerType,
-      data: {
-        type: "interaction",
-        trustBoundary: "external",
-        confidentiality: "secret",
-        channel: "web",
-        frequency: "interactive",
-        /* whatever defaults you want */
-      },
-    };
-    // ];
+      data: {}
+    }
+
+    // console.log(newEdge);
+    return newEdge;
   }
 </script>
 

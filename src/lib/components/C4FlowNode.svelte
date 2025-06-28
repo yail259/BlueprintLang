@@ -8,7 +8,6 @@
     type NodeProps,
     type Node,
   } from "@xyflow/svelte";
-  import { Baby } from "lucide-svelte";
 
   import * as Dialog from "$lib/components/ui/dialog/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
@@ -29,9 +28,6 @@
 
   function addSubNode(e: SubmitEvent) {
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-
-    const nameViaFD = new FormData(form).get("name") as string;
 
     const nextLayer =
       data.type === "context"
@@ -42,11 +38,13 @@
 
     // drop it 30 px from parent’s top-left
     const localPos = { x: 30, y: 30 };
-    // convert to canvas coords (parent’s position is already relative for extent:'parent')
+
     const position = localPos;
 
+    const newID = currName.toLowerCase().replace(' ', '_');
+
     const newNode: Node = {
-      id: nameViaFD,
+      id: newID,
       type: "c4FlowNode",
       parentId: id,
       extent: "parent",
@@ -54,7 +52,7 @@
       width: (width ?? 140) * 0.5,
       height: (height ?? 80) * 0.5,
       data: {
-        label: nameViaFD,
+        label: currName,
         type: nextLayer,
       },
     };
@@ -62,9 +60,12 @@
     nodes.update((curr) => {
       return [...curr, newNode];
     });
+
+    currName = "";
   }
 </script>
 
+<div class="node">
 <NodeResizer
   minWidth={100}
   minHeight={30}
@@ -72,7 +73,15 @@
   color="rgb(255, 64, 0)"
 />
 
-<Handle type="target" position={Position.Left} />
+<Handle type="source" position={Position.Top} id="a" class="handle" />
+<Handle type="source" position={Position.Right} id="b" class="handle" />
+<Handle type="source" position={Position.Bottom} id="c" class="handle" />
+<Handle type="source" position={Position.Left} id="d" class="handle" />
+
+<Handle type="target" position={Position.Top} id="a" class="handle" />
+<Handle type="target" position={Position.Right} id="b" class="handle" />
+<Handle type="target" position={Position.Bottom} id="c" class="handle" />
+<Handle type="target" position={Position.Left} id="d" class="handle" />
 
 <div
   style={`
@@ -124,10 +133,9 @@
   {/if} -->
 
   <!-- plus button rendered only when selected -->
-  {#if selected}
+  <!-- {#if selected}
     <Dialog.Root bind:open>
       <Dialog.Trigger>
-        <!-- Replace the existing circle with a styled Button component -->
         <Button
           class="nodrag absolute -top-6 -right-3 px-3 text-xs
                 bg-primary text-white hover:bg-primary/90"
@@ -139,7 +147,6 @@
 
       <Dialog.Content>
         <Dialog.Header>
-          <!-- compact, centered panel -->
           <form
             class="flex flex-col gap-6 w-full max-w-md mx-auto"
             onsubmit={(e) => {
@@ -150,8 +157,6 @@
             <Dialog.Title class="text-xl font-semibold">
               Name your new child node!
             </Dialog.Title>
-
-            <!-- field + hint + submit, all in one grid  -->
             <div class="grid grid-cols-4 gap-3 items-start">
               <Label
                 for="name"
@@ -172,8 +177,6 @@
                   A node with this ID already exists.
                 </p>
               {/if}
-
-              <!-- full-width button aligned under inputs -->
               <Button
                 class="col-span-4 mt-4 w-full"
                 disabled={exists}
@@ -186,9 +189,6 @@
         </Dialog.Header>
       </Dialog.Content>
     </Dialog.Root>
-  {/if}
+  {/if} -->
 </div>
-
-<!-- Node body -->
-
-<Handle type="source" position={Position.Right} />
+</div>

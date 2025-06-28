@@ -50,12 +50,15 @@
 
   function updateGraph() {
     // console.log("changed");
-
-    const newMerged = loadGraph(semDerived, viewDerived);
-    graph.nodes = newMerged.nodes;
-    graph.edges = newMerged.edges;
-    // console.log(newMerged);
-    // // setGraph();
+    try {
+      const newMerged = loadGraph(semDerived, viewDerived);
+      console.log(newMerged);
+    
+      graph.nodes = newMerged.nodes;
+      graph.edges = newMerged.edges;
+    } catch (e) {
+      //suppress in-between invalid YAML states
+    }
   }
 
   async function downloadZip() {
@@ -157,6 +160,7 @@
     <div class="editor-shell">
       <CodeMirror
         bind:value={semDerived}
+        lineWrapping={true}
         lang={yaml()}
         on:change={() => updateGraph()}
       />

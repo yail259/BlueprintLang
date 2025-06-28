@@ -27,10 +27,6 @@
 
   function addNode(e: SubmitEvent) {
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-
-    const nameViaFD = new FormData(form).get("name") as string;
-    // const roleViaFD = new FormData(form).get("role") as string;
 
     const pane = document
       ?.querySelector(".svelte-flow__pane")
@@ -47,8 +43,10 @@
     const centreX = (-x + (width - 140) / 2) / zoom;
     const centreY = (-y + (height - 80) / 2) / zoom;
 
+    const id = currName.toLowerCase().replace(' ', '_');
+
     const newNode: Node = {
-      id: nameViaFD,
+      id,
       type: "c4FlowNode",
       position: {
         x: centreX,
@@ -57,7 +55,7 @@
       width: 140,
       height: 80,
       data: {
-        label: nameViaFD,
+        label: currName,
         type: currtype,
         // role: roleViaFD,
       },

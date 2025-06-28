@@ -6,7 +6,7 @@
   const { updateEdge } = useSvelteFlow();
 
   let kind = $derived((data.kind ?? "") as string);
-  let sync = $derived((data.sync ?? false) as boolean);
+  let sync = $derived((data.sync ?? true) as boolean);
   let trustBoundary = $derived((data.trustBoundary ?? "internal") as string);
   let confidentiality = $derived((data.confidentiality ?? "public") as string);
   let channel = $derived((data.channel ?? "web") as string);

@@ -81,8 +81,8 @@ function getLayoutedElements(nodes: Node[], edges: Edge[], direction = "TB") {
 
   const layoutedNodes = nodes.map((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = isHorizontal ? Position.Left : Position.Top;
-    node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom;
+    // node.targetPosition = isHorizontal ? Position.Left : Position.Top;
+    // node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom;
 
     // We are shifting the dagre node position (anchor=center center) to the top left
     // so it matches the React Flow node anchor point (top left).
@@ -120,7 +120,7 @@ export function loadGraph(yamlText: string, viewText: string): MergedGraph {
       missingV += 1;
     }
 
-    return {
+    let combNode: Node = {
       id,
       type: "c4FlowNode",
       data: { ...(semNode as NodeSem) },
@@ -128,7 +128,16 @@ export function loadGraph(yamlText: string, viewText: string): MergedGraph {
       width: v?.width ?? 150,
       height: v?.height ?? 40,
       zIndex: v?.zIndex ?? 0,
-    };
+      // extent: semNode.parent ? "parent" : "",
+    }
+
+    if (semNode.parent) {
+      // TODO assign parents a larger size
+      combNode.parentId = semNode.parent;
+      combNode.extent = "parent";
+    }
+
+    return combNode;
   });
 
   const edges: Edge[] = Object.entries(sem.edges ?? {}).map(([id, semEdge]) => {
@@ -139,6 +148,8 @@ export function loadGraph(yamlText: string, viewText: string): MergedGraph {
       type: "c4FlowEdge",
       source,
       target,
+      sourceHandle: v?.sourceHandle ?? 'a',
+      targetHandle: v?.targetHandle ?? 'b',
       data: { ...(semEdge as EdgeSem) },
       zIndex: v?.zIndex ?? 1,
       markerEnd: v?.markerEnd ?? DEFAULT_MARKEREND,
@@ -147,7 +158,7 @@ export function loadGraph(yamlText: string, viewText: string): MergedGraph {
   });
 
   if (missingV > nodes.length * 0.2) {
-    return getLayoutedElements(nodes, edges, "LR");
+    return getLayoutedElements(nodes, edges);
   }
 
   return { nodes, edges };
@@ -189,9 +200,10 @@ export function saveGraphSemantic(merged: MergedGraph): string {
 
   /** NODES */
   merged.nodes.forEach((n) => {
+    const nParent = n.parentId;
     const { id, data: semNode } = n;
     const { id: _, ...props } = semNode as NodeSem;
-    outNodes[id] = props;
+    outNodes[id] = {...props, parent: nParent};
   });
 
   /** EDGES */

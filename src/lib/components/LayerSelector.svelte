@@ -9,8 +9,7 @@
   function updateLayerVis(layer: number) {
     nodes.update((nodes) => {
       return nodes.map((node) => {
-        // @ts-ignore
-        const nodeLayer = getNodeLayer(node.data.type);
+        const nodeLayer = getNodeLayer(node.data.type as string);
         const visible = nodeLayer === layer || nodeLayer === layer + 1;
         return {
           ...node,
@@ -20,9 +19,9 @@
     });
     edges.update((edges) => {
       return edges.map((edge) => {
-        // @ts-ignore
-        const nodeLayer = getEdgeLayer(edge.data.type);
-        //  || nodeLayer === layer + 1
+        const sourceNode = nodes.current.find((n) => edge.source === n.id)!;
+
+        const nodeLayer = getNodeLayer(sourceNode.data.type as string);
         const visible = nodeLayer === layer;
         return {
           ...edge,
@@ -35,12 +34,6 @@
   function getNodeLayer(nodeType: string) {
     const order = ["context", "container", "component", "code"];
     const i = order.indexOf(nodeType);
-    return i;
-  }
-
-  function getEdgeLayer(edgeType: string) {
-    const order = ["interaction", "protocol", "contract", "dataflow"];
-    const i = order.indexOf(edgeType);
     return i;
   }
 

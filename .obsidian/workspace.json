@@ -169,5 +169,7 @@
     }
   },
   "active": "2e51d1aa589da89d",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "src/lib/util/edge.ts"
+  ]
 }

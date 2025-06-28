@@ -6,35 +6,60 @@
     getBezierPath,
     getSmoothStepPath,
     type EdgeProps,
+    useNodes,
+    useInternalNode,
   } from "@xyflow/svelte";
   import ContextEdgeLabel from "./ContextEdgeLabel.svelte";
   import ComponentEdgeLabel from "./ComponentEdgeLabel.svelte";
   import CodeEdgeLabel from "./CodeEdgeLabel.svelte";
   import ContainerEdgeLabel from "./ContainerEdgeLabel.svelte";
+  import { getEdgeParams } from "$lib/util/edge";
 
-  let { id, markerEnd, sourceX, sourceY, targetX, targetY, data }: EdgeProps =
+  let { id, markerEnd, source, target, data }: EdgeProps =
     $props();
 
-  let [edgePath, labelX, labelY] = $derived(
-    getStraightPath({
-      sourceX,
-      sourceY,
-      targetX,
-      targetY,
+  const sourceNode = useInternalNode(source);
+  const targetNode = useInternalNode(target);
+ 
+  let [path, labelX, labelY] = $derived.by(() => {
+    // console.log(sourceNode, targetNode);
+    const edgeParams = getEdgeParams(sourceNode.current!, targetNode.current!);
+    // console.log(edgeParams);
+
+    const calc = getBezierPath({
+      sourceX: edgeParams.sx,
+      sourceY: edgeParams.sy,
+      sourcePosition: edgeParams.sourcePos,
+      targetPosition: edgeParams.targetPos,
+      targetX: edgeParams.tx,
+      targetY: edgeParams.ty,
     })
-  );
+
+    return calc;
+  });
+
+  ;
+
+  // let [edgePath, labelX, labelY] = $derived(
+  //   getStraightPath({
+  //     sourceX,
+  //     sourceY,
+  //     targetX,
+  //     targetY,
+  //   })
+  // );
 </script>
 
-<BaseEdge {id} path={edgePath} {markerEnd} />
+<BaseEdge {id} {path} {markerEnd} />
 <EdgeLabel x={labelX} y={labelY}>
   {#if data}
-    {#if data.type === "interaction"}
+    {#if sourceNode.current!.data.type === "context"}
       <ContextEdgeLabel {id} {data} />
-    {:else if data.type === "protocol"}
+    {:else if sourceNode.current!.data.type === "container"}
       <ContainerEdgeLabel {data} />
-    {:else if data.type === "contract"}
+    {:else if sourceNode.current!.data.type === "component"}
       <ComponentEdgeLabel {data} />
-    {:else if data.type === "dataflow"}
+    {:else if sourceNode.current!.data.type === "code"}
       <CodeEdgeLabel {data} />
     {/if}
   {/if}
@@ -47,4 +72,4 @@
   >
     delete
   </button> -->
-</EdgeLabel>
+</EdgeLabel> 
